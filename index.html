@@ -3,6 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- ================= MONETIZAÇÃO (APENAS ADCASH) ================= -->
+    <!-- Meta tag de verificação -->
+    <meta name="6a97888e-site-verification" content="bd99db8fb501b8b61ac0f7666355ff8a">
+    
+    <!-- Biblioteca e ativação do Adcash (gera pop-under) -->
+    <script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js"></script>
+    <script type="text/javascript">
+        aclib.runAutoTag({ zoneId: 'scybgnvija' });
+    </script>
+    
+    <!-- Adterra (ainda não ativo, mantenha comentado) -->
+    <!--
+    <script>
+        // Código completo da Adterra (quando tiver, cole aqui)
+    </script>
+    -->
+    <!-- ============================================================= -->
+    
     <title>vazamets - Vidas em Vídeo</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -33,6 +52,7 @@
         }
     </script>
     <style>
+        /* ESTILOS COMPLETOS (mantidos exatamente iguais aos originais) */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background: #000; color: #fff; overflow-x: hidden; }
 
@@ -300,6 +320,7 @@
     <div id="particles"></div>
     <div id="toast-container" class="fixed bottom-6 right-6 z-[100] flex flex-col gap-3"></div>
 
+    <!-- HEADER (idêntico ao original) -->
     <header class="fixed top-0 left-0 w-full z-50 transition-all duration-300 bg-black/80 backdrop-blur-xl border-b border-white/5" id="main-header">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16 sm:h-20">
@@ -307,35 +328,20 @@
                     <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white/10 flex items-center justify-center">
                         <i data-lucide="play" class="w-4 h-4 sm:w-5 sm:h-5 text-white fill-white"></i>
                     </div>
-                    <span class="font-display font-bold text-lg sm:text-xl tracking-tight text-white">
-                        vaza<span class="text-gray-400">ments</span>
-                    </span>
+                    <span class="font-display font-bold text-lg sm:text-xl tracking-tight text-white">vaza<span class="text-gray-400">ments</span></span>
                 </div>
 
                 <div class="search-container hidden sm:block flex-1 max-w-xl mx-8">
                     <div class="relative">
                         <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"></i>
-                        <input
-                            type="text"
-                            id="search-input"
-                            placeholder="Pesquisar histórias por nome..."
-                            class="w-full pl-11 pr-4 py-2.5 rounded-xl text-sm text-white placeholder-gray-500 font-body"
-                            oninput="handleSearch(this.value)"
-                        >
-                        <div id="search-clear" class="absolute right-3 top-1/2 -translate-y-1/2 hidden cursor-pointer p-1 hover:bg-white/10 rounded-full transition-colors" onclick="clearSearch()">
-                            <i data-lucide="x" class="w-3.5 h-3.5 text-gray-400"></i>
-                        </div>
+                        <input type="text" id="search-input" placeholder="Pesquisar histórias por nome..." class="w-full pl-11 pr-4 py-2.5 rounded-xl text-sm text-white placeholder-gray-500 font-body" oninput="handleSearch(this.value)">
+                        <div id="search-clear" class="absolute right-3 top-1/2 -translate-y-1/2 hidden cursor-pointer p-1 hover:bg-white/10 rounded-full transition-colors" onclick="clearSearch()"><i data-lucide="x" class="w-3.5 h-3.5 text-gray-400"></i></div>
                     </div>
                 </div>
 
                 <div class="flex items-center gap-2 sm:gap-3">
-                    <button class="sm:hidden p-2.5 rounded-xl hover:bg-white/10 transition-colors" onclick="toggleMobileSearch()">
-                        <i data-lucide="search" class="w-5 h-5"></i>
-                    </button>
-                    <!-- sino removido -->
-                    <div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-xs font-bold cursor-pointer hover:scale-110 transition-transform" onclick="showToast('Perfil em desenvolvimento! 👤')">
-                        SV
-                    </div>
+                    <button class="sm:hidden p-2.5 rounded-xl hover:bg-white/10 transition-colors" onclick="toggleMobileSearch()"><i data-lucide="search" class="w-5 h-5"></i></button>
+                    <div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-xs font-bold cursor-pointer hover:scale-110 transition-transform" onclick="showToast('Perfil em desenvolvimento! 👤')">SV</div>
                 </div>
             </div>
         </div>
@@ -345,13 +351,7 @@
                 <div class="search-container">
                     <div class="relative">
                         <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"></i>
-                        <input
-                            type="text"
-                            id="mobile-search-input"
-                            placeholder="Pesquisar por nome..."
-                            class="w-full pl-11 pr-4 py-2.5 rounded-xl text-sm text-white placeholder-gray-500 font-body"
-                            oninput="handleSearch(this.value)"
-                        >
+                        <input type="text" id="mobile-search-input" placeholder="Pesquisar por nome..." class="w-full pl-11 pr-4 py-2.5 rounded-xl text-sm text-white placeholder-gray-500 font-body" oninput="handleSearch(this.value)">
                     </div>
                 </div>
             </div>
@@ -359,7 +359,9 @@
     </header>
 
     <main id="app" class="relative z-10 pt-20 sm:pt-24 pb-20 min-h-screen">
+        <!-- GRID VIEW -->
         <div id="grid-view" class="grid-page">
+            <!-- Hero -->
             <section class="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto mb-10 sm:mb-14">
                 <div class="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-white/5 border border-white/10 p-6 sm:p-10 lg:p-14">
                     <div class="relative z-10 max-w-xl">
@@ -367,53 +369,27 @@
                             <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
                             <span class="text-xs sm:text-sm font-medium text-gray-300">Novas histórias toda semana</span>
                         </div>
-                        <h1 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-3 sm:mb-4 text-white">
-                            Cada pessoa tem uma <span class="text-gray-400">história</span> pra contar
-                        </h1>
-                        <p class="text-gray-400 text-sm sm:text-base lg:text-lg leading-relaxed mb-6 sm:mb-8">
-                            Descubra histórias reais contadas em vídeo. Vidas inspiradoras, momentos únicos, narrativas que ficam.
-                        </p>
+                        <h1 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-3 sm:mb-4 text-white">Cada pessoa tem uma <span class="text-gray-400">história</span> pra contar</h1>
+                        <p class="text-gray-400 text-sm sm:text-base lg:text-lg leading-relaxed mb-6 sm:mb-8">Descubra histórias reais contadas em vídeo. Vidas inspiradoras, momentos únicos, narrativas que ficam.</p>
                         <div class="flex flex-wrap gap-3">
-                            <div class="flex items-center gap-2 text-sm text-gray-400">
-                                <i data-lucide="video" class="w-4 h-4"></i>
-                                <span>HD Streaming</span>
-                            </div>
-                            <div class="flex items-center gap-2 text-sm text-gray-400">
-                                <i data-lucide="heart" class="w-4 h-4"></i>
-                                <span>Histórias reais</span>
-                            </div>
-                            <div class="flex items-center gap-2 text-sm text-gray-400">
-                                <i data-lucide="globe" class="w-4 h-4"></i>
-                                <span>Português</span>
-                            </div>
+                            <div class="flex items-center gap-2 text-sm text-gray-400"><i data-lucide="video" class="w-4 h-4"></i><span>HD Streaming</span></div>
+                            <div class="flex items-center gap-2 text-sm text-gray-400"><i data-lucide="heart" class="w-4 h-4"></i><span>Histórias reais</span></div>
+                            <div class="flex items-center gap-2 text-sm text-gray-400"><i data-lucide="globe" class="w-4 h-4"></i><span>Português</span></div>
                         </div>
                     </div>
                 </div>
             </section>
 
+            <!-- Filtros -->
             <section class="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto mb-8">
                 <div class="category-scroll flex gap-2 sm:gap-3 overflow-x-auto pb-2" id="category-filters">
-                    <button class="tag-pill active px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap text-white" onclick="filterCategory('all', this)">
-                        Todas
-                    </button>
-                    <button class="tag-pill px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap text-gray-400" onclick="filterCategory('inspiração', this)">
-                         Inspiração
-                    </button>
-                    <button class="tag-pill px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap text-gray-400" onclick="filterCategory('superação', this)">
-                         Superação
-                    </button>
-                    <button class="tag-pill px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap text-gray-400" onclick="filterCategory('arte', this)">
-                         Arte
-                    </button>
-                    <button class="tag-pill px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap text-gray-400" onclick="filterCategory('tecnologia', this)">
-                         Tecnologia
-                    </button>
-                    <button class="tag-pill px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap text-gray-400" onclick="filterCategory('aventura', this)">
-                         Aventura
-                    </button>
-                    <button class="tag-pill px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap text-gray-400" onclick="filterCategory('música', this)">
-                         Música
-                    </button>
+                    <button class="tag-pill active px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap text-white" onclick="filterCategory('all', this)">Todas</button>
+                    <button class="tag-pill px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap text-gray-400" onclick="filterCategory('inspiração', this)">Inspiração</button>
+                    <button class="tag-pill px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap text-gray-400" onclick="filterCategory('superação', this)">Superação</button>
+                    <button class="tag-pill px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap text-gray-400" onclick="filterCategory('arte', this)">Arte</button>
+                    <button class="tag-pill px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap text-gray-400" onclick="filterCategory('tecnologia', this)">Tecnologia</button>
+                    <button class="tag-pill px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap text-gray-400" onclick="filterCategory('aventura', this)">Aventura</button>
+                    <button class="tag-pill px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap text-gray-400" onclick="filterCategory('música', this)">Música</button>
                 </div>
             </section>
 
@@ -430,28 +406,26 @@
 
             <div id="no-results" class="hidden px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
                 <div class="text-center py-20">
-                    <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-white/5 flex items-center justify-center">
-                        <i data-lucide="search-x" class="w-8 h-8 text-gray-500"></i>
-                    </div>
+                    <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-white/5 flex items-center justify-center"><i data-lucide="search-x" class="w-8 h-8 text-gray-500"></i></div>
                     <h3 class="font-display text-xl font-semibold mb-2">Nenhuma história encontrada</h3>
                     <p class="text-gray-500 text-sm">Tente pesquisar com outro nome ou categoria</p>
                 </div>
             </div>
         </div>
 
+        <!-- DETAIL VIEW (inicialmente vazio) -->
         <div id="detail-view" class="hidden"></div>
     </main>
+
+    <!-- ========== O BLOCO DE ANÚNCIO DA EZMOB FOI REMOVIDO ========== -->
+    <!-- Agora só resta o Adcash (pop-up reduzido para um) -->
 
     <footer id="main-footer" class="relative z-10 border-t border-white/5 bg-black/80 backdrop-blur-xl">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center">
-                        <i data-lucide="play" class="w-3.5 h-3.5 text-white fill-white"></i>
-                    </div>
-                    <span class="font-display font-bold text-sm tracking-tight text-white">
-                        Story<span class="text-gray-400">Vid</span>
-                    </span>
+                    <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center"><i data-lucide="play" class="w-3.5 h-3.5 text-white fill-white"></i></div>
+                    <span class="font-display font-bold text-sm tracking-tight text-white">Story<span class="text-gray-400">Vid</span></span>
                 </div>
                 <p class="text-xs text-gray-400">© 2024 vazamets. Todas as histórias reservadas.</p>
                 <div class="flex items-center gap-4">
@@ -464,6 +438,7 @@
     </footer>
 
     <script>
+        // ==================== ARRAY DE HISTÓRIAS (COMPLETO) ====================
         const stories = [
             {
                 id: 1,
@@ -666,18 +641,12 @@
             }
         ];
 
+        // ==================== VARIÁVEIS GLOBAIS ====================
         let currentFilter = 'all';
         let currentSearch = '';
         let currentView = 'grid';
 
-        document.addEventListener('DOMContentLoaded', () => {
-            renderGrid();
-            lucide.createIcons();
-            initParticles();
-            initScrollReveal();
-            initHeaderScroll();
-        });
-
+        // ==================== FUNÇÕES DO SITE (COMPLETAS) ====================
         function renderGrid() {
             const grid = document.getElementById('stories-grid');
             const noResults = document.getElementById('no-results');
@@ -765,19 +734,12 @@
             });
         }
 
-        /**
-         * Converte um link do Google Drive (formato /view?usp=sharing)
-         * para o formato de download direto (uc?export=download&id=...)
-         * que pode ser usado como src de uma tag <video>.
-         */
         function resolveVideoSource(url) {
             if (!url) return url;
-            // Extrai o ID do arquivo da URL do Google Drive
             const match = url.match(/\/d\/([^\/]+)(?:\/|$)/);
             if (match) {
                 return `https://drive.google.com/uc?export=download&id=${match[1]}`;
             }
-            // Se já for um ID puro (fallback)
             if (/^[A-Za-z0-9_-]+$/.test(url)) {
                 return `https://drive.google.com/uc?export=download&id=${url}`;
             }
@@ -1102,8 +1064,6 @@
             }
         }
 
-        function initScrollReveal() {}
-
         function initHeaderScroll() {
             const header = document.getElementById('main-header');
             window.addEventListener('scroll', () => {
@@ -1117,6 +1077,13 @@
                 }
             }, { passive: true });
         }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderGrid();
+            lucide.createIcons();
+            initParticles();
+            initHeaderScroll();
+        });
 
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' && document.activeElement.classList.contains('story-card')) {
