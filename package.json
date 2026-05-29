@@ -1,0 +1,20 @@
+{
+  "name": "filmshub",
+  "version": "1.0.0",
+  "description": "Static HTML website with Vercel Web Analytics",
+  "private": true,
+  "scripts": {
+    "dev": "python3 -m http.server 8080",
+    "start": "python3 -m http.server 8080"
+  },
+  "keywords": [
+    "static",
+    "html",
+    "vercel"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@vercel/analytics": "^1.4.1"
+  }
+}
