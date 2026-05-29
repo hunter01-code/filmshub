@@ -4,23 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- ================= MONETIZAÇÃO (APENAS ADCASH) ================= -->
-    <!-- Meta tag de verificação -->
-    <meta name="6a97888e-site-verification" content="bd99db8fb501b8b61ac0f7666355ff8a">
+    <!-- ================= MONETIZAÇÃO ATUALIZADA ================= -->
+    <!-- 1. Meta tag de verificação JuicyAds -->
+    <meta name="juicyads-site-verification" content="afe665c69823ef949c37d81b37fc0acd">
     
-    <!-- Biblioteca e ativação do Adcash (gera pop-under) -->
-    <script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js"></script>
-    <script type="text/javascript">
-        aclib.runAutoTag({ zoneId: 'scybgnvija' });
-    </script>
+    <!-- 2. Script do AdProvider (Magsrv) - carrega a biblioteca -->
+    <script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script>
     
-    <!-- Adterra (ainda não ativo, mantenha comentado) -->
-    <!--
-    <script>
-        // Código completo da Adterra (quando tiver, cole aqui)
-    </script>
-    -->
-    <!-- ============================================================= -->
+    <!-- 3. EZmob / Effective CPM Network (scripts e container) -->
+    <script src="https://pl29577607.effectivecpmnetwork.com/ca/ab/81/caab815b9922fa04e562d473f43f0e96.js"></script>
+    <script async="async" data-cfasync="false" src="https://pl29577608.effectivecpmnetwork.com/b463f795c3d2539b24068a632cc543f6/invoke.js"></script>
+    <!-- ======================================================== -->
     
     <title>vazamets - Vidas em Vídeo</title>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -312,6 +306,17 @@
 
         .category-scroll::-webkit-scrollbar { display: none; }
         .category-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* Estilo para container de anúncios */
+        .ad-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            text-align: center;
+            background: rgba(255,255,255,0.02);
+            border-radius: 1rem;
+            padding: 1rem;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
     </style>
 </head>
 <body class="min-h-screen bg-black">
@@ -417,8 +422,16 @@
         <div id="detail-view" class="hidden"></div>
     </main>
 
-    <!-- ========== O BLOCO DE ANÚNCIO DA EZMOB FOI REMOVIDO ========== -->
-    <!-- Agora só resta o Adcash (pop-up reduzido para um) -->
+    <!-- ========== ANÚNCIOS (Magsrv + EZmob) ========== -->
+    <div class="ad-container">
+        <!-- Anúncio Magsrv (AdProvider) -->
+        <ins class="eas6a97888e2" data-zoneid="5937544"></ins>
+        <script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script>
+        
+        <!-- Anúncio EZmob (Effective CPM) -->
+        <div id="container-b463f795c3d2539b24068a632cc543f6"></div>
+    </div>
+    <!-- ============================================= -->
 
     <footer id="main-footer" class="relative z-10 border-t border-white/5 bg-black/80 backdrop-blur-xl">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
