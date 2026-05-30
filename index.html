@@ -253,6 +253,17 @@
             to { filter: hue-rotate(360deg); }
         }
 
+        /* Indicador de progresso de carregamento */
+        .loading-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #fff, #aaa);
+            z-index: 9999;
+            transition: width 0.3s ease;
+        }
+
         @media (max-width: 640px) {
             .story-card .card-info { padding: 0.5rem; }
             .video-container { max-height: 50vh; }
@@ -264,6 +275,7 @@
     <div class="noise-overlay"></div>
     <div id="particles"></div>
     <div id="toast-container" class="fixed bottom-6 right-6 z-[100] flex flex-col gap-3"></div>
+    <div id="loading-progress" class="loading-progress" style="width:0%"></div>
 
     <!-- Header -->
     <header class="fixed top-0 left-0 w-full z-50 transition-all duration-300 bg-black/80 backdrop-blur-xl border-b border-white/5" id="main-header">
@@ -326,7 +338,7 @@
                             vaza<span class="text-gray-400">ments</span>
                         </h1>
                         <p class="text-gray-400 text-sm sm:text-base lg:text-lg leading-relaxed mb-6 sm:mb-8">
-                            Conteúdo exclusivo em vídeo. c.coelho,Silvia,e muitas mais baby.
+                            Conteúdo exclusivo em vídeo. c.coelho, Silvia e outras babys.
                         </p>
                         <div class="flex flex-wrap gap-3">
                             <div class="flex items-center gap-2 text-sm text-gray-400">
@@ -366,7 +378,7 @@
                 </div>
             </section>
 
-            <!-- Grelha de vídeos com colunas reduzidas para capas maiores -->
+            <!-- Grelha de vídeos -->
             <section class="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
                 <div id="stories-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-4"></div>
             </section>
@@ -452,7 +464,7 @@
         let currentSearch = '';
         let currentView = 'grid';
         let currentVideo = null;
-        let videos = [];
+        let videos = []; // array final com thumbnails e duração
 
         let fullVideos = videosData.map((v, idx) => ({
             id: idx + 1,
@@ -466,7 +478,11 @@
             description: v.description
         }));
 
-        // ==================== EXTRAÇÃO DE METADADOS ====================
+        // ==================== EXTRAÇÃO DE METADADOS (OTIMIZADA) ====================
+        // Máximo de dimensão para o thumbnail (reduz tamanho do blob)
+        const MAX_THUMB_WIDTH = 480;
+        const EXTRACT_TIMEOUT = 5000; // 5 segundos máximo por vídeo
+
         function extractMetadata(videoUrl) {
             return new Promise((resolve) => {
                 const video = document.createElement('video');
@@ -474,38 +490,62 @@
                 video.muted = true;
                 video.preload = "metadata";
                 video.currentTime = 0.1;
+                video.setAttribute('playsinline', '');
 
-                const cleanup = () => {
-                    video.removeEventListener('loadeddata', onLoad);
-                    video.removeEventListener('error', onError);
-                    video.src = '';
-                    video.load();
+                let resolved = false;
+                const finish = (thumbnail, duration) => {
+                    if (!resolved) {
+                        resolved = true;
+                        cleanup();
+                        resolve({ thumbnail, duration });
+                    }
                 };
 
+                const cleanup = () => {
+                    clearTimeout(timer);
+                    video.removeEventListener('loadeddata', onLoad);
+                    video.removeEventListener('error', onError);
+                    video.removeEventListener('suspend', onLoad); // alguns navegadores disparam suspend
+                    video.src = '';
+                    video.load();
+                    if (video.parentNode) video.parentNode.removeChild(video);
+                };
+
+                const timer = setTimeout(() => {
+                    finish(null, '--:--');
+                }, EXTRACT_TIMEOUT);
+
                 function onLoad() {
-                    setTimeout(() => {
-                        try {
-                            const canvas = document.createElement('canvas');
-                            canvas.width = video.videoWidth;
-                            canvas.height = video.videoHeight;
-                            const ctx = canvas.getContext('2d');
-                            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-                            canvas.toBlob(blob => {
-                                const thumb = URL.createObjectURL(blob);
-                                const duration = video.duration ? formatDuration(video.duration) : '--:--';
-                                resolve({ thumbnail: thumb, duration });
-                                cleanup();
-                            }, 'image/jpeg', 0.8);
-                        } catch (e) {
-                            resolve({ thumbnail: null, duration: '--:--' });
-                            cleanup();
+                    if (video.videoWidth === 0 || video.videoHeight === 0) {
+                        finish(null, '--:--');
+                        return;
+                    }
+                    try {
+                        const canvas = document.createElement('canvas');
+                        let w = video.videoWidth;
+                        let h = video.videoHeight;
+                        // Limita o tamanho do canvas para thumbnails mais leves
+                        if (w > MAX_THUMB_WIDTH) {
+                            const ratio = MAX_THUMB_WIDTH / w;
+                            w = MAX_THUMB_WIDTH;
+                            h = Math.round(h * ratio);
                         }
-                    }, 100);
+                        canvas.width = w;
+                        canvas.height = h;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(video, 0, 0, w, h);
+                        canvas.toBlob(blob => {
+                            const thumb = URL.createObjectURL(blob);
+                            const duration = video.duration && isFinite(video.duration) ? formatDuration(video.duration) : '--:--';
+                            finish(thumb, duration);
+                        }, 'image/jpeg', 0.5); // qualidade reduzida para 0.5
+                    } catch (e) {
+                        finish(null, '--:--');
+                    }
                 }
 
                 function onError() {
-                    resolve({ thumbnail: null, duration: '--:--' });
-                    cleanup();
+                    finish(null, '--:--');
                 }
 
                 video.addEventListener('loadeddata', onLoad);
@@ -516,20 +556,106 @@
         }
 
         function formatDuration(seconds) {
+            if (!seconds || !isFinite(seconds)) return '--:--';
             const m = Math.floor(seconds / 60);
             const s = Math.floor(seconds % 60);
             return `${m}:${s.toString().padStart(2, '0')}`;
         }
 
+        // Extração SEQUENCIAL (uma de cada vez) com atualização progressiva da grelha
         async function generateAllThumbnails() {
-            const promises = fullVideos.map(video => extractMetadata(video.videoUrl));
-            const results = await Promise.all(promises);
-            videos = fullVideos.map((v, i) => ({
-                ...v,
-                thumbnail: results[i].thumbnail,
-                duration: results[i].duration
-            }));
-            renderGrid();
+            const progressBar = document.getElementById('loading-progress');
+            const total = fullVideos.length;
+
+            // Mostrar placeholders primeiro
+            renderPlaceholderGrid();
+
+            for (let i = 0; i < total; i++) {
+                const video = fullVideos[i];
+                const result = await extractMetadata(video.videoUrl);
+
+                // Guarda os metadados
+                fullVideos[i].thumbnail = result.thumbnail;
+                fullVideos[i].duration = result.duration;
+
+                // Atualiza o array principal
+                videos = fullVideos.map((v, idx) => ({
+                    ...v,
+                    thumbnail: fullVideos[idx].thumbnail,
+                    duration: fullVideos[idx].duration
+                }));
+
+                // Atualiza a barra de progresso
+                const progress = Math.round(((i + 1) / total) * 100);
+                if (progressBar) progressBar.style.width = progress + '%';
+
+                // Atualiza o card específico na grelha em vez de re-renderizar tudo
+                updateSingleCard(i);
+
+                // Pequena pausa entre extrações para não sobrecarregar (100ms)
+                if (i < total - 1) {
+                    await new Promise(r => setTimeout(r, 100));
+                }
+            }
+
+            // Remove a barra de progresso
+            if (progressBar) {
+                progressBar.style.width = '100%';
+                setTimeout(() => { progressBar.style.width = '0%'; }, 500);
+            }
+        }
+
+        // Atualiza apenas um card em vez de re-renderizar toda a grelha
+        function updateSingleCard(index) {
+            const video = fullVideos[index];
+            const grid = document.getElementById('stories-grid');
+            const cards = grid.querySelectorAll('.story-card');
+            if (!cards[index]) return;
+
+            const card = cards[index];
+            const img = card.querySelector('img, .loading-thumb');
+            const playOverlay = card.querySelector('.play-overlay');
+            const cardGradient = card.querySelector('.card-gradient');
+            const cardInfo = card.querySelector('.card-info');
+            const topRight = card.querySelector('.absolute.top-3.right-3');
+
+            // Substitui o placeholder pela imagem real
+            if (img && video.thumbnail) {
+                if (img.classList.contains('loading-thumb')) {
+                    const newImg = document.createElement('img');
+                    newImg.src = video.thumbnail;
+                    newImg.alt = video.title;
+                    newImg.className = 'card-img';
+                    newImg.loading = 'lazy';
+                    img.parentNode.replaceChild(newImg, img);
+                } else if (img.tagName === 'IMG') {
+                    img.src = video.thumbnail;
+                }
+            }
+
+            // Atualiza a duração
+            if (topRight) {
+                topRight.innerHTML = `<span class="px-2 py-0.5 rounded-md text-xs font-medium bg-black/70 border border-white/15 text-white">${video.duration || '...'}</span>`;
+            }
+
+            // Garante que os overlays existem
+            if (!card.querySelector('.play-overlay') && playOverlay) {
+                card.appendChild(playOverlay);
+            }
+            if (!card.querySelector('.card-gradient') && cardGradient) {
+                card.appendChild(cardGradient);
+            }
+
+            // Atualiza info
+            if (cardInfo) {
+                cardInfo.innerHTML = `
+                    <div class="flex items-center gap-2 mb-1">
+                        <div class="w-5 h-5 rounded-full bg-white/20 flex-shrink-0"></div>
+                        <h3 class="font-display font-semibold text-xs leading-snug line-clamp-1 text-white/90">${video.title}</h3>
+                    </div>
+                    <p class="text-[10px] text-gray-400">${video.views} visualizações • ${video.date}</p>
+                `;
+            }
         }
 
         // ==================== RENDERIZAÇÃO ====================
@@ -565,18 +691,32 @@
             noResults.classList.add('hidden');
 
             grid.innerHTML = filtered.map((video, index) => `
-                <div class="story-card reveal" style="animation-delay: ${index * 0.05}s" onclick="openVideo(${video.id})">
+                <div class="story-card reveal" style="animation-delay: ${index * 0.03}s" onclick="openVideo(${video.id})">
                     <div class="loading-thumb w-full" style="aspect-ratio:16/9; display:flex; align-items:center; justify-content:center; background:#1a1a1a;">
                         <i data-lucide="loader-circle" class="w-8 h-8 text-gray-500 animate-spin"></i>
                     </div>
                     <div class="play-overlay"><i data-lucide="play" class="w-5 h-5 text-black fill-black ml-0.5"></i></div>
                     <div class="card-gradient"></div>
-                    <div class="card-info">
+                    <div class="absolute top-3 left-3 z-10">
                         <span class="px-2 py-0.5 rounded-md text-[10px] font-semibold uppercase tracking-wider bg-white/20 text-white">${video.category}</span>
+                    </div>
+                    <div class="absolute top-3 right-3 z-10">
+                        <span class="px-2 py-0.5 rounded-md text-xs font-medium bg-black/70 border border-white/15 text-white">...</span>
+                    </div>
+                    <div class="card-info">
+                        <div class="flex items-center gap-2 mb-1">
+                            <div class="w-5 h-5 rounded-full bg-white/20 flex-shrink-0"></div>
+                            <h3 class="font-display font-semibold text-xs leading-snug line-clamp-1 text-white/90">${video.title}</h3>
+                        </div>
+                        <p class="text-[10px] text-gray-400">${video.views} visualizações • ${video.date}</p>
                     </div>
                 </div>
             `).join('');
+
             lucide.createIcons();
+            requestAnimationFrame(() => {
+                document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+            });
         }
 
         function renderGrid() {
@@ -616,7 +756,7 @@
             noResults.classList.add('hidden');
 
             grid.innerHTML = filtered.map((video, index) => `
-                <div class="story-card animated-border reveal" style="animation-delay: ${index * 0.05}s" onclick="openVideo(${video.id})">
+                <div class="story-card animated-border reveal" style="animation-delay: ${index * 0.03}s" onclick="openVideo(${video.id})">
                     <img src="${video.thumbnail || ''}" alt="${video.title}" class="card-img" loading="lazy">
                     <div class="play-overlay"><i data-lucide="play" class="w-5 h-5 text-black fill-black ml-0.5"></i></div>
                     <div class="card-gradient"></div>
@@ -678,7 +818,7 @@
 
                     <div class="video-wrapper mb-6">
                         <div class="video-container">
-                            <video id="mainVideo" controls controlsList="nodownload" oncontextmenu="return false;" autoplay poster="${video.thumbnail || ''}" preload="auto">
+                            <video id="mainVideo" controls controlsList="nodownload" oncontextmenu="return false;" autoplay poster="${video.thumbnail || ''}" preload="metadata">
                                 <source src="${video.videoUrl}" type="video/mp4">
                                 Seu navegador não suporta vídeo.
                             </video>
@@ -915,7 +1055,7 @@
             lucide.createIcons();
             initParticles();
             initHeaderScroll();
-            generateAllThumbnails();
+            generateAllThumbnails(); // extração sequencial com atualização progressiva
         });
 
         document.addEventListener('keydown', (e) => {
