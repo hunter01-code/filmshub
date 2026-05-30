@@ -2,18 +2,20 @@
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- ================= MONETIZAÇÃO ================= -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+    <!-- ================= MONETIZAÇÃO (APENAS SEGURAS) ================= -->
     <meta name="juicyads-site-verification" content="afe665c69823ef949c37d81b37fc0acd">
-    
-    <script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script>
+
+    <!-- EZmob / Effective CPM Network -->
     <script src="https://pl29577607.effectivecpmnetwork.com/ca/ab/81/caab815b9922fa04e562d473f43f0e96.js"></script>
     <script async="async" data-cfasync="false" src="https://pl29577608.effectivecpmnetwork.com/b463f795c3d2539b24068a632cc543f6/invoke.js"></script>
+
+    <!-- Adcash (biblioteca principal) -->
     <script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js"></script>
-    <!-- =============================================== -->
-    
-    <title>vazamets - Vidas em Vídeo</title>
+    <!-- ============================================================= -->
+
+    <title>vazamets - Vídeos</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>
@@ -24,123 +26,236 @@
                         'display': ['Space Grotesk', 'sans-serif'],
                         'body': ['Inter', 'sans-serif'],
                     },
-                    colors: {
-                        brand: {
-                            50: '#fafafa',
-                            100: '#f5f5f5',
-                            200: '#e5e5e5',
-                            300: '#d4d4d4',
-                            400: '#a3a3a3',
-                            500: '#737373',
-                            600: '#525252',
-                            700: '#404040',
-                            800: '#262626',
-                            900: '#171717',
-                        }
-                    }
                 }
             }
         }
     </script>
     <style>
-        /* ESTILOS COMPLETOS */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background: #000; color: #fff; overflow-x: hidden; }
-
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #0a0a0a; }
         ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: #555; }
 
-        .hero-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; overflow: hidden; pointer-events: none; background: #000; }
-        .noise-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; opacity: 0.02; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
-        .story-card { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer; position: relative; }
-        .story-card:hover { transform: translateY(-8px) scale(1.02); }
-        .story-card:hover .card-overlay { opacity: 1; }
-        .story-card:hover .card-play { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-        .story-card:hover .card-thumbnail img { transform: scale(1.08); }
-        .story-card:hover .card-glow { opacity: 1; }
-        .card-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(20,20,20,0.6) 35%, transparent 100%); opacity: 0.8; transition: opacity 0.4s ease; z-index: 2; border-radius: inherit; }
-        .card-play { position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%) scale(0.8); opacity: 0; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 3; width: 56px; height: 56px; background: rgba(255,255,255,0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 30px rgba(255,255,255,0.15); backdrop-filter: blur(4px); }
-        .card-play i { color: #000; fill: #000; }
-        .card-glow { position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); width: 80%; height: 40px; background: rgba(255,255,255,0.05); filter: blur(20px); opacity: 0; transition: opacity 0.4s ease; z-index: 1; }
-        .card-thumbnail { overflow: hidden; border-radius: inherit; }
-        .card-thumbnail img { transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
-        .detail-page { animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
-        .grid-page { animation: fadeIn 0.4s ease forwards; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .video-container { position: relative; background: #000; border-radius: 16px; overflow: hidden; aspect-ratio: 16/9; box-shadow: 0 0 60px rgba(255,255,255,0.05), 0 18px 40px rgba(0,0,0,0.8); }
-        .video-container video { width: 100%; height: 100%; object-fit: cover; }
-        .search-container input { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); color: #f8fafc; transition: all 0.3s ease; }
-        .search-container input:focus { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.3); box-shadow: 0 0 22px rgba(255,255,255,0.05); outline: none; }
-        .tag-pill { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s ease; }
-        .tag-pill:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.2); }
-        .tag-pill.active { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.25); }
-        .extra-video-card { transition: all 0.3s ease; cursor: pointer; }
-        .extra-video-card:hover { background: rgba(255,255,255,0.06); transform: translateX(4px); }
-        .animated-border { position: relative; }
-        .animated-border::before { content: ''; position: absolute; inset: -1px; border-radius: inherit; padding: 1px; background: linear-gradient(135deg, rgba(255,255,255,0.3), rgba(200,200,200,0.2), rgba(255,255,255,0.1), rgba(255,255,255,0.3)); background-size: 300% 300%; animation: borderGlow 4s ease infinite; -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; opacity: 0; transition: opacity 0.4s ease; }
-        .animated-border:hover::before { opacity: 1; }
-        @keyframes borderGlow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-        .profile-ring { background: conic-gradient(from 0deg, #fff, #aaa, #666, #fff); padding: 2px; border-radius: 50%; animation: ringRotate 6s linear infinite; }
-        @keyframes ringRotate { to { filter: hue-rotate(360deg); } }
-        .skeleton { background: linear-gradient(90deg, #111 25%, #1a1a1a 50%, #111 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 8px; }
-        @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
-        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
-        .reveal.visible { opacity: 1; transform: translateY(0); }
-        .particle { position: fixed; width: 2px; height: 2px; background: rgba(255,255,255,0.1); border-radius: 50%; pointer-events: none; z-index: 0; }
-        .back-btn { transition: all 0.3s ease; }
-        .back-btn:hover { background: rgba(255,255,255,0.08); transform: translateX(-4px); }
-        .duration-badge { background: rgba(0,0,0,0.7); border: 1px solid rgba(255,255,255,0.15); backdrop-filter: blur(4px); }
-        .toast { animation: toastIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        @keyframes toastIn { from { opacity: 0; transform: translateY(20px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
-        .toast-out { animation: toastOut 0.3s ease forwards; }
-        @keyframes toastOut { to { opacity: 0; transform: translateY(20px) scale(0.95); } }
+        .hero-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0; overflow: hidden; pointer-events: none; background: #000;
+        }
+        .noise-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 1; pointer-events: none; opacity: 0.02;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+
+        /* Cartão melhorado (com capa maior) */
+        .story-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            position: relative;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+        .story-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(255,255,255,0.3);
+        }
+        .story-card .card-img {
+            width: 100%;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            background: #1a1a1a;
+            display: block;
+        }
+        .story-card:hover .card-img {
+            transform: scale(1.08);
+        }
+        .story-card .play-overlay {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.7);
+            width: 48px;
+            height: 48px;
+            background: rgba(255,255,255,0.95);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.4s ease;
+            z-index: 10;
+            pointer-events: none;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+        }
+        .story-card:hover .play-overlay {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        .story-card .card-gradient {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.15) 50%, transparent 100%);
+            opacity: 0.8;
+            transition: opacity 0.4s ease;
+            z-index: 2;
+            pointer-events: none;
+        }
+        .story-card:hover .card-gradient {
+            opacity: 0.95;
+        }
+        .story-card .card-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 0.75rem;
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        /* Efeito de borda animada */
+        .animated-border {
+            position: relative;
+        }
+        .animated-border::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: inherit;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.3), rgba(200,200,200,0.2), rgba(255,255,255,0.1), rgba(255,255,255,0.3));
+            background-size: 300% 300%;
+            animation: borderGlow 4s ease infinite;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 15;
+        }
+        .animated-border:hover::before {
+            opacity: 1;
+        }
+        @keyframes borderGlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Player estilo YouTube */
+        .video-wrapper {
+            max-width: 1280px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+        }
+        .video-container {
+            position: relative;
+            background: #000;
+            border-radius: 1rem;
+            overflow: hidden;
+            aspect-ratio: 16/9;
+            width: 100%;
+            box-shadow: 0 0 60px rgba(255,255,255,0.05), 0 18px 40px rgba(0,0,0,0.8);
+        }
+        .video-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: #000;
+        }
+
+        .search-container input {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #f8fafc;
+            transition: all 0.3s ease;
+        }
+        .search-container input:focus {
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.3);
+            box-shadow: 0 0 22px rgba(255,255,255,0.05);
+            outline: none;
+        }
+        .tag-pill {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .tag-pill:hover {
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.2);
+        }
+        .tag-pill.active {
+            background: rgba(255,255,255,0.12);
+            border-color: rgba(255,255,255,0.25);
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .particle {
+            position: fixed; width: 2px; height: 2px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            pointer-events: none; z-index: 0;
+        }
+        .toast {
+            animation: toastIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes toastIn {
+            from { opacity: 0; transform: translateY(20px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .toast-out {
+            animation: toastOut 0.3s ease forwards;
+        }
+        @keyframes toastOut {
+            to { opacity: 0; transform: translateY(20px) scale(0.95); }
+        }
         .category-scroll::-webkit-scrollbar { display: none; }
         .category-scroll { -ms-overflow-style: none; scrollbar-width: none; }
-        
-        /* ========== CONTAINERS DE ANÚNCIOS REDUZIDOS ========== */
-        /* Container padrão (mais compacto) */
         .ad-container {
-            max-width: 800px;
-            margin: 1rem auto;
-            text-align: center;
-            background: rgba(255,255,255,0.01);
-            border-radius: 0.5rem;
-            padding: 0.25rem;
-            border: none;
+            max-width: 800px; margin: 1rem auto; text-align: center;
+            background: rgba(255,255,255,0.01); border-radius: 0.5rem;
+            padding: 0.25rem; border: none;
         }
-        
-        /* AutoTag (tamanho reduzido) */
-        .ad-autotag {
-            max-width: 800px;
-            margin: 1rem auto;
-            text-align: center;
+        .ad-autotag { max-width: 800px; margin: 1rem auto; text-align: center; }
+        .ad-videoslider { max-width: 800px; margin: 1rem auto; text-align: center; }
+        .back-btn {
+            transition: all 0.3s ease; display: inline-flex; align-items: center;
+            gap: 0.5rem; color: #9ca3af; cursor: pointer; background: transparent;
+            border: none; padding: 0.5rem 1rem; border-radius: 0.75rem;
         }
-        
-        /* VideoSlider (tamanho reduzido) */
-        .ad-videoslider {
-            max-width: 800px;
-            margin: 1rem auto;
-            text-align: center;
+        .back-btn:hover {
+            background: rgba(255,255,255,0.08); transform: translateX(-4px); color: white;
         }
-        
-        /* Novo Magsrv (tamanho reduzido, sem borda destacada) */
-        .ad-magsrv-novo {
-            max-width: 800px;
-            margin: 1rem auto;
-            text-align: center;
-            background: transparent;
-            border-radius: 0;
-            padding: 0;
-            border: none;
+        .loading-thumb {
+            background: repeating-linear-gradient(45deg, #1a1a1a, #1a1a1a 10px, #222 10px, #222 20px);
         }
-        
-        /* Remove qualquer container extra que apareça */
-        .ad-container div, .ad-autotag div, .ad-videoslider div, .ad-magsrv-novo div {
-            margin: 0;
-            padding: 0;
+        .profile-ring {
+            background: conic-gradient(from 0deg, #fff, #aaa, #666, #fff);
+            padding: 2px;
+            border-radius: 50%;
+            animation: ringRotate 6s linear infinite;
+        }
+        @keyframes ringRotate {
+            to { filter: hue-rotate(360deg); }
+        }
+
+        @media (max-width: 640px) {
+            .story-card .card-info { padding: 0.5rem; }
+            .video-container { max-height: 50vh; }
         }
     </style>
 </head>
@@ -150,23 +265,36 @@
     <div id="particles"></div>
     <div id="toast-container" class="fixed bottom-6 right-6 z-[100] flex flex-col gap-3"></div>
 
+    <!-- Header -->
     <header class="fixed top-0 left-0 w-full z-50 transition-all duration-300 bg-black/80 backdrop-blur-xl border-b border-white/5" id="main-header">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16 sm:h-20">
-                <div class="flex items-center gap-3 cursor-pointer" onclick="window.scrollTo({top:0, behavior:'smooth'})">
-                    <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white/10 flex items-center justify-center"><i data-lucide="play" class="w-4 h-4 sm:w-5 sm:h-5 text-white fill-white"></i></div>
-                    <span class="font-display font-bold text-lg sm:text-xl tracking-tight text-white">vaza<span class="text-gray-400">ments</span></span>
+                <div class="flex items-center gap-3 cursor-pointer" onclick="goHome()">
+                    <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white/10 flex items-center justify-center">
+                        <i data-lucide="play" class="w-4 h-4 sm:w-5 sm:h-5 text-white fill-white"></i>
+                    </div>
+                    <span class="font-display font-bold text-lg sm:text-xl tracking-tight text-white">
+                        vaza<span class="text-gray-400">ments</span>
+                    </span>
                 </div>
+
                 <div class="search-container hidden sm:block flex-1 max-w-xl mx-8">
                     <div class="relative">
                         <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"></i>
-                        <input type="text" id="search-input" placeholder="Pesquisar histórias por nome..." class="w-full pl-11 pr-4 py-2.5 rounded-xl text-sm text-white placeholder-gray-500 font-body" oninput="handleSearch(this.value)">
-                        <div id="search-clear" class="absolute right-3 top-1/2 -translate-y-1/2 hidden cursor-pointer p-1 hover:bg-white/10 rounded-full transition-colors" onclick="clearSearch()"><i data-lucide="x" class="w-3.5 h-3.5 text-gray-400"></i></div>
+                        <input type="text" id="search-input" placeholder="Pesquisar vídeos..." class="w-full pl-11 pr-4 py-2.5 rounded-xl text-sm text-white placeholder-gray-500 font-body" oninput="handleSearch(this.value)">
+                        <div id="search-clear" class="absolute right-3 top-1/2 -translate-y-1/2 hidden cursor-pointer p-1 hover:bg-white/10 rounded-full transition-colors" onclick="clearSearch()">
+                            <i data-lucide="x" class="w-3.5 h-3.5 text-gray-400"></i>
+                        </div>
                     </div>
                 </div>
+
                 <div class="flex items-center gap-2 sm:gap-3">
-                    <button class="sm:hidden p-2.5 rounded-xl hover:bg-white/10 transition-colors" onclick="toggleMobileSearch()"><i data-lucide="search" class="w-5 h-5"></i></button>
-                    <div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-xs font-bold cursor-pointer hover:scale-110 transition-transform" onclick="showToast('Perfil em desenvolvimento! 👤')">SV</div>
+                    <button class="sm:hidden p-2.5 rounded-xl hover:bg-white/10 transition-colors" onclick="toggleMobileSearch()">
+                        <i data-lucide="search" class="w-5 h-5"></i>
+                    </button>
+                    <div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-xs font-bold cursor-pointer hover:scale-110 transition-transform" onclick="showToast('Perfil em desenvolvimento! 👤')">
+                        SV
+                    </div>
                 </div>
             </div>
         </div>
@@ -175,111 +303,111 @@
                 <div class="search-container">
                     <div class="relative">
                         <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"></i>
-                        <input type="text" id="mobile-search-input" placeholder="Pesquisar por nome..." class="w-full pl-11 pr-4 py-2.5 rounded-xl text-sm text-white placeholder-gray-500 font-body" oninput="handleSearch(this.value)">
+                        <input type="text" id="mobile-search-input" placeholder="Pesquisar vídeos..." class="w-full pl-11 pr-4 py-2.5 rounded-xl text-sm text-white placeholder-gray-500 font-body" oninput="handleSearch(this.value)">
                     </div>
                 </div>
             </div>
         </div>
     </header>
 
+    <!-- Conteúdo principal -->
     <main id="app" class="relative z-10 pt-20 sm:pt-24 pb-20 min-h-screen">
+        <!-- Vista de Grelha -->
         <div id="grid-view" class="grid-page">
+            <!-- Hero -->
             <section class="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto mb-10 sm:mb-14">
                 <div class="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-white/5 border border-white/10 p-6 sm:p-10 lg:p-14">
                     <div class="relative z-10 max-w-xl">
                         <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/20 mb-4 sm:mb-5">
                             <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
-                            <span class="text-xs sm:text-sm font-medium text-gray-300">Novas histórias toda semana</span>
+                            <span class="text-xs sm:text-sm font-medium text-gray-300">Novos vídeos toda semana</span>
                         </div>
-                        <h1 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-3 sm:mb-4 text-white">Cada pessoa tem uma <span class="text-gray-400">história</span> pra contar</h1>
-                        <p class="text-gray-400 text-sm sm:text-base lg:text-lg leading-relaxed mb-6 sm:mb-8">Descubra histórias reais contadas em vídeo. Vidas inspiradoras, momentos únicos, narrativas que ficam.</p>
+                        <h1 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-3 sm:mb-4 text-white">
+                            vaza<span class="text-gray-400">ments</span>
+                        </h1>
+                        <p class="text-gray-400 text-sm sm:text-base lg:text-lg leading-relaxed mb-6 sm:mb-8">
+                            Conteúdo exclusivo em vídeo. c.coelho,Silvia,e muitas mais baby.
+                        </p>
                         <div class="flex flex-wrap gap-3">
-                            <div class="flex items-center gap-2 text-sm text-gray-400"><i data-lucide="video" class="w-4 h-4"></i><span>HD Streaming</span></div>
-                            <div class="flex items-center gap-2 text-sm text-gray-400"><i data-lucide="heart" class="w-4 h-4"></i><span>Histórias reais</span></div>
-                            <div class="flex items-center gap-2 text-sm text-gray-400"><i data-lucide="globe" class="w-4 h-4"></i><span>Português</span></div>
+                            <div class="flex items-center gap-2 text-sm text-gray-400">
+                                <i data-lucide="video" class="w-4 h-4"></i><span>HD</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-sm text-gray-400">
+                                <i data-lucide="maximize" class="w-4 h-4"></i><span>Tela cheia</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-sm text-gray-400">
+                                <i data-lucide="volume-2" class="w-4 h-4"></i><span>Controlo total</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- AUTO TAG -->
+            <!-- Ad auto tag -->
             <div class="ad-autotag">
-                <script type="text/javascript">
-                    aclib.runAutoTag({ zoneId: 'caqleanbe2' });
-                </script>
+                <script type="text/javascript">aclib.runAutoTag({ zoneId: 'caqleanbe2' });</script>
             </div>
 
+            <!-- Filtros de categoria -->
             <section class="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto mb-8">
                 <div class="category-scroll flex gap-2 sm:gap-3 overflow-x-auto pb-2" id="category-filters">
-                    <button class="tag-pill active px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap text-white" onclick="filterCategory('all', this)">Todas</button>
-                    <button class="tag-pill px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap text-gray-400" onclick="filterCategory('inspiração', this)">Inspiração</button>
-                    <button class="tag-pill px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap text-gray-400" onclick="filterCategory('superação', this)">Superação</button>
-                    <button class="tag-pill px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap text-gray-400" onclick="filterCategory('arte', this)">Arte</button>
-                    <button class="tag-pill px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap text-gray-400" onclick="filterCategory('tecnologia', this)">Tecnologia</button>
-                    <button class="tag-pill px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap text-gray-400" onclick="filterCategory('aventura', this)">Aventura</button>
-                    <button class="tag-pill px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap text-gray-400" onclick="filterCategory('música', this)">Música</button>
+                    <button class="tag-pill active px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap text-white" onclick="filterCategory('all', this)">Todos</button>
+                    <button class="tag-pill px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap text-gray-400" onclick="filterCategory('exclusivo', this)">Exclusivos</button>
+                    <button class="tag-pill px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap text-gray-400" onclick="filterCategory('destaque', this)">Destaques</button>
+                    <button class="tag-pill px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap text-gray-400" onclick="filterCategory('novos', this)">Novos</button>
                 </div>
             </section>
 
+            <!-- Título da secção -->
             <section class="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto mb-6">
                 <div class="flex items-center justify-between">
-                    <h2 class="font-display text-lg sm:text-xl font-semibold" id="section-title">Todas as Histórias</h2>
+                    <h2 class="font-display text-lg sm:text-xl font-semibold" id="section-title">Vídeos em Destaque</h2>
                     <span class="text-sm text-gray-500" id="results-count"></span>
                 </div>
             </section>
 
+            <!-- Grelha de vídeos com colunas reduzidas para capas maiores -->
             <section class="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-                <div id="stories-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6"></div>
+                <div id="stories-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-4"></div>
             </section>
 
+            <!-- Estado vazio -->
             <div id="no-results" class="hidden px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
                 <div class="text-center py-20">
-                    <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-white/5 flex items-center justify-center"><i data-lucide="search-x" class="w-8 h-8 text-gray-500"></i></div>
-                    <h3 class="font-display text-xl font-semibold mb-2">Nenhuma história encontrada</h3>
-                    <p class="text-gray-500 text-sm">Tente pesquisar com outro nome ou categoria</p>
+                    <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-white/5 flex items-center justify-center">
+                        <i data-lucide="search-x" class="w-8 h-8 text-gray-500"></i>
+                    </div>
+                    <h3 class="font-display text-xl font-semibold mb-2">Nenhum vídeo encontrado</h3>
+                    <p class="text-gray-500 text-sm">Tente pesquisar com outro termo</p>
                 </div>
             </div>
-
-            <!-- NOVO Magsrv (após grid) -->
-            <div class="ad-magsrv-novo">
-                <ins class="eas6a97888e20" data-zoneid="5938150"></ins>
-                <script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script>
-            </div>
         </div>
+
+        <!-- Vista de detalhe -->
         <div id="detail-view" class="hidden"></div>
     </main>
 
-    <!-- Magsrv antigo + EZmob -->
+    <!-- Anúncios -->
     <div class="ad-container">
-        <ins class="eas6a97888e2" data-zoneid="5937544"></ins>
-        <script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script>
-        <div id="container-b463f795c3d2539b24068a632cc543f6"></div>
+        <div><script type="text/javascript">aclib.runBanner({ zoneId: '11369798' });</script></div>
     </div>
-
-    <!-- Banner Adcash -->
-    <div class="ad-container">
-        <div>
-            <script type="text/javascript">
-                aclib.runBanner({ zoneId: '11369798' });
-            </script>
-        </div>
-    </div>
-
-    <!-- VideoSlider Adcash -->
     <div class="ad-videoslider">
-        <script type="text/javascript">
-            aclib.runVideoSlider({ zoneId: '11371662' });
-        </script>
+        <script type="text/javascript">aclib.runVideoSlider({ zoneId: '11371662' });</script>
     </div>
 
+    <!-- Footer -->
     <footer id="main-footer" class="relative z-10 border-t border-white/5 bg-black/80 backdrop-blur-xl">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center"><i data-lucide="play" class="w-3.5 h-3.5 text-white fill-white"></i></div>
-                    <span class="font-display font-bold text-sm tracking-tight text-white">Story<span class="text-gray-400">Vid</span></span>
+                    <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center">
+                        <i data-lucide="play" class="w-3.5 h-3.5 text-white fill-white"></i>
+                    </div>
+                    <span class="font-display font-bold text-sm tracking-tight text-white">
+                        vaza<span class="text-gray-400">ments</span>
+                    </span>
                 </div>
-                <p class="text-xs text-gray-400">© 2024 vazamets. Todas as histórias reservadas.</p>
+                <p class="text-xs text-gray-400">© 2024 vazaments. Todos os direitos reservados.</p>
                 <div class="flex items-center gap-4">
                     <a href="#" class="text-gray-400 hover:text-white transition-colors"><i data-lucide="instagram" class="w-4 h-4"></i></a>
                     <a href="#" class="text-gray-400 hover:text-white transition-colors"><i data-lucide="twitter" class="w-4 h-4"></i></a>
@@ -290,73 +418,144 @@
     </footer>
 
     <script>
-        // ==================== ARRAY DE HISTÓRIAS (COMPLETO) ====================
-        const stories = [
-            { id: 1, name: "Ana Souza", title: "Do nada ao topo: minha jornada de empreendedorismo", description: "Ana nasceu numa pequena cidade do interior de Minas Gerais e sempre sonhou com o próprio negócio. Depois de várias tentativas e fracassos, ela fundou uma startup de tecnologia que hoje impacta milhares de vidas. Nesta história, ela compartilha os bastidores da sua jornada, os momentos de desespero e as vitórias que a transformaram.", category: "inspiração", duration: "12:34", views: "23.4K", date: "há 2 dias", photo: "https://drive.google.com/uc?export=download&id=1wkY97rYmAop3xQ0tDPUGzHPnjZ1M0PWA", thumbnail: "https://drive.google.com/uc?export=download&id=1wkY97rYmAop3xQ0tDPUGzHPnjZ1M0PWA", videoUrl: "https://drive.google.com/uc?export=download&id=1wkY97rYmAop3xQ0tDPUGzHPnjZ1M0PWAK", extraVideos: [
-                { title: "Ana fala sobre os primeiros passos", duration: "5:12", thumbnail: "https://drive.google.com/uc?export=download&id=1wkY97rYmAop3xQ0tDPUGzHPnjZ1M0PWA", videoUrl: "https://drive.google.com/uc?export=download&id=12k2lwql9K5tV1S5Rv6TLQy1LTbdJ535T" },
-                { title: "O dia em que quase desistiu", duration: "8:45", thumbnail: "https://drive.google.com/uc?export=download&id=1wkY97rYmAop3xQ0tDPUGzHPnjZ1M0PWA", videoUrl: "https://drive.google.com/uc?export=download&id=15MV-U4a0AcGVYMRGCaMT3kyZghrks9AK" }
-            ] },
-            { id: 2, name: "Carlos Mendes", title: "O pianista das ruas: música como refúgio", description: "Carlos perdeu tudo num incêndio: casa, pertences e o piano que herdou da avó. Sem teto e sem instrumento, ele encontrou um teclado abandonado e começou a tocar nas ruas de São Paulo. Suas melodias se tornaram viral e transformaram sua vida para sempre.", category: "música", duration: "15:20", views: "89.1K", date: "há 1 semana", photo: "http://static.photos/people/320x240/102", thumbnail: "http://static.photos/nature/640x360/202", videoUrl: "https://drive.google.com/file/d/18y62ftQKAD_jdxw86tACw2e9z4ajpSJ8/view?usp=sharing", extraVideos: [
-                { title: "Carlos toca ao vivo na Avenida Paulista", duration: "6:30", thumbnail: "http://static.photos/outdoor/320x240/303", videoUrl: "https://drive.google.com/file/d/19nNP7cAilCxmj3KQGkuBAWta1EV448k3/view?usp=sharing" },
-                { title: "A história do piano da avó", duration: "4:15", thumbnail: "http://static.photos/vintage/320x240/304", videoUrl: "https://drive.google.com/file/d/1AvR24YpXL44XBP0sUzwEaK2eK-JCsUiu/view?usp=sharing" },
-                { title: "Como a música salvou minha vida", duration: "10:02", thumbnail: "http://static.photos/abstract/320x240/305", videoUrl: "https://drive.google.com/file/d/1G31EglyAyrT5zhOnIPCEazz6gP2LiH5p/view?usp=sharing" }
-            ] },
-            { id: 3, name: "Marina Costa", title: "A mulher que escala montanhas impossíveis", description: "Marina é uma alpinista brasileira que conquered os picos mais difíceis do mundo. Depois de um acidente que quase tirou sua mobilidade, ela voltou a escalar e se tornou um símbolo de superação. Esta é a história de quem não aceita limites impostos.", category: "aventura", duration: "18:45", views: "156K", date: "há 3 dias", photo: "http://static.photos/people/320x240/103", thumbnail: "http://static.photos/nature/640x360/203", videoUrl: "https://drive.google.com/file/d/1Hf5VHntpo2Nuy4d0WLbSeT1engj_wgKg/view?usp=sharing", extraVideos: [
-                { title: "Bastidores da escalada no Himalaya", duration: "7:20", thumbnail: "http://static.photos/aerial/320x240/306", videoUrl: "https://drive.google.com/file/d/1JAyoWPyPO6dLhMCuDS5sEkEiW8oW5U1W/view?usp=sharing" }
-            ] },
-            { id: 4, name: "Rafael Oliveira", title: "Código e comunidade: como mudei minha favela", description: "Rafael cresceu na Rocinha e descobriu a programação aos 15 anos numa ONG. Hoje, ele lidera um projeto que ensina programação a jovens de comunidades carentes. Mais de 500 alunos já passaram pelo programa e mudaram suas histórias.", category: "tecnologia", duration: "11:50", views: "45.2K", date: "há 5 dias", photo: "http://static.photos/people/320x240/104", thumbnail: "http://static.photos/technology/640x360/204", videoUrl: "https://drive.google.com/file/d/1LZhRYvIJg0Xpc3aPIXUDujIJCrM6aivr/view?usp=sharing", extraVideos: [
-                { title: "Aula de código na comunidade", duration: "8:30", thumbnail: "http://static.photos/education/320x240/307", videoUrl: "https://drive.google.com/file/d/1Labv0jblirihuN3sl6rhuEB7-yAYchQS/view?usp=sharing" },
-                { title: "Depoimentos dos alunos", duration: "6:00", thumbnail: "http://static.photos/people/320x240/308", videoUrl: "https://drive.google.com/file/d/1ORm2UiJqhYgP9NODFW8SqiqmL92IONlU/view?usp=sharing" }
-            ] },
-            { id: 5, name: "Lua Ferreira", title: "Pintando a dor: arte como terapia", description: "Lua enfrentou depressão severa durante a pandemia e encontrou na pintura uma forma de sobrevivência emocional. Suas obras, que começaram como desabafo pessoal, já foram expostas em galerias de 3 países. Um relato visceral sobre arte e cura.", category: "arte", duration: "14:10", views: "67.8K", date: "há 1 dia", photo: "http://static.photos/people/320x240/105", thumbnail: "http://static.photos/abstract/640x360/205", videoUrl: "https://drive.google.com/file/d/1PYNCd3IN3_ddYV-RshK-7PZKIsT-FuZ9/view?usp=sharing", extraVideos: [
-                { title: "Processo criativo de Lua", duration: "9:15", thumbnail: "http://static.photos/craft/320x240/309", videoUrl: "https://drive.google.com/file/d/1SQRmGgqU6yJq--wPJA2ZEYlV7_Cfn1nR/view?usp=sharing" }
-            ] },
-            { id: 6, name: "Pedro Santos", title: "Depois do acidente: recomeçar do zero", description: "Pedro era atleta profissional quando sofreu um acidente grave que mudou tudo. Perdeu os movimentos das pernas, mas não perdeu a vontade de viver. Hoje ele é treinador adaptativo e inspira milhares com sua história de resiliência.", category: "superação", duration: "20:30", views: "210K", date: "há 2 semanas", photo: "http://static.photos/people/320x240/106", thumbnail: "http://static.photos/sport/640x360/206", videoUrl: "https://drive.google.com/file/d/1_WQZGc3t_1vIVyNAk6lVfGGuB3OaHPtu/view?usp=sharing", extraVideos: [
-                { title: "Treino adaptativo com Pedro", duration: "11:20", thumbnail: "http://static.photos/wellness/320x240/310", videoUrl: "https://drive.google.com/file/d/1aFDAe-HYBT5h4I2gF9ABcrcZ9CJqSyMk/view?usp=sharing" },
-                { title: "Pedro e a família que o apoiou", duration: "7:45", thumbnail: "http://static.photos/people/320x240/311", videoUrl: "https://drive.google.com/file/d/1b2sF6vBR0ovVnUk0ogY1b4PY1-hFcbPK/view?usp=sharing" }
-            ] },
-            { id: 7, name: "Beatriz Lima", title: "Da linha de código ao app milionário", description: "Beatriz criou um app de saúde mental sozinha, no quarto da mãe. Sem investimento e sem conexões, ela persistiu até o app se tornar um dos mais baixados no Brasil. Uma história sobre determinação e o poder de começar de onde se está.", category: "tecnologia", duration: "13:55", views: "98.3K", date: "há 4 dias", photo: "http://static.photos/people/320x240/107", thumbnail: "http://static.photos/workspace/640x360/207", videoUrl: "https://drive.google.com/file/d/1b3ht03bvFDg_1phe80XpV3X3Us2XtRrv/view?usp=sharing", extraVideos: [
-                { title: "Como o app funciona", duration: "4:30", thumbnail: "http://static.photos/technology/320x240/312", videoUrl: "https://drive.google.com/file/d/1cUaJa00bcl1TRU6demMNUID5jHW40AuS/view?usp=sharing" }
-            ] },
-            { id: 8, name: "João Ribeiro", title: "A cozinha que salva vidas", description: "João é chef e fundador de um projeto que alimenta mais de 2 mil pessoas por dia nas ruas do Rio. Com doações e trabalho voluntário, ele transformou sua paixão pela culinária numa missão de vida. Uma história que alimenta corpo e alma.", category: "inspiração", duration: "16:20", views: "134K", date: "há 6 dias", photo: "http://static.photos/people/320x240/108", thumbnail: "http://static.photos/food/640x360/208", videoUrl: "https://drive.google.com/file/d/1ciCfm4bfnDF0xvvZzVhj5v530feciF8C/view?usp=sharing", extraVideos: [
-                { title: "Rotina de um dia no projeto", duration: "9:00", thumbnail: "http://static.photos/restaurant/320x240/313", videoUrl: "https://drive.google.com/file/d/1ghnciwMGHPYH_89uaanhwNTfiogFdCzi/view?usp=sharing" },
-                { title: "Receita solidária de João", duration: "5:40", thumbnail: "http://static.photos/food/320x240/314", videoUrl: "https://drive.google.com/file/d/1jmV1cBBReqFtCYINb-moVMXHZGTCogds/view?usp=sharing" }
-            ] },
-            { id: 9, name: "Iara Nunes", title: "A artesã que virou fenômeno digital", description: "Iara aprendeu artesanato com a avó indígena e começou a vender suas peças num mercado de rua. Quando gravou o primeiro vídeo pro TikTok, não imaginava que atingiria milhões. Hoje, ela é embaixadora da cultura indígena na internet.", category: "arte", duration: "10:45", views: "76.5K", date: "há 3 dias", photo: "http://static.photos/people/320x240/109", thumbnail: "http://static.photos/craft/640x360/209", videoUrl: "https://drive.google.com/file/d/1ktCwtjg0eFdxmAnOTGrbttgJPUhp-doX/view?usp=sharing", extraVideos: [] },
-            { id: 10, name: "Thiago Almeida", title: "Trilhas extremas: português nos 4 cantos do mundo", description: "Thiago deixou tudo para viajar o mundo a pé. Já cruzou 23 países com apenas uma mochila. Nesta história, ele narra os perigos, as descobertas e o que aprendeu sobre humanidade caminhando por estradas desconhecidas.", category: "aventura", duration: "22:10", views: "189K", date: "há 1 semana", photo: "http://static.photos/people/320x240/110", thumbnail: "http://static.photos/travel/640x360/210", videoUrl: "https://drive.google.com/file/d/1l8C36sBWtM2RIvrroeYSo-t9SdkojqdA/view?usp=sharing", extraVideos: [
-                { title: "A trilha mais perigosa do Nepal", duration: "14:30", thumbnail: "http://static.photos/nature/320x240/315", videoUrl: "https://drive.google.com/file/d/1plGGeR7SVjFnBWAIucn5NF4qcabyLSsh/view?usp=sharing" },
-                { title: "Dicas pra quem quer começar", duration: "6:15", thumbnail: "http://static.photos/travel/320x240/316", videoUrl: "https://drive.google.com/file/d/1uimsespN4uUcvlvAMsovDMFC-uz78NxA/view?usp=sharing" },
-                { title: "O dia que quase não voltou", duration: "12:00", thumbnail: "http://static.photos/aerial/320x240/317", videoUrl: "https://drive.google.com/file/d/1uusjCVtOJVs6xspUgOO8bfw0mWkfUjkU/view?usp=sharing" }
-            ] },
-            { id: 11, name: "Fernanda Rocha", title: "O hospital onde ninguém quer estar, mas todos precisam", description: "Fernanda é enfermeira há 20 anos e trabalha no maior hospital público do Brasil. Ela conta o que ninguém vê: os bastidores, as histórias de pacientes que a marcaram e a luta diária de quem cuida dos outros mesmo esquecendo de si.", category: "superação", duration: "17:40", views: "245K", date: "há 4 dias", photo: "http://static.photos/people/320x240/111", thumbnail: "http://static.photos/medical/640x360/211", videoUrl: "https://drive.google.com/file/d/1v2dd-rYC45OQJ5c5nYprMf_B7bh7xgWv/view?usp=sharing", extraVideos: [
-                { title: "Turno de 24h com Fernanda", duration: "13:00", thumbnail: "http://static.photos/medical/320x240/318", videoUrl: "https://drive.google.com/file/d/1wAI5fsKHin94MQcGNqPuN-cEsfapwVyP/view?usp=sharing" }
-            ] },
-            { id: 12, name: "Diego Martins", title: "Batucada digital: a fusão do samba com a eletrônica", description: "Diego é DJ e produtor musical que uniu batidas eletrônicas com ritmos do samba de raiz. Seu som único já tocou em festivais de 5 continentes e abriu portas pra uma nova geração de músicos brasileiros no cenário global.", category: "música", duration: "9:55", views: "52.7K", date: "há 2 dias", photo: "http://static.photos/people/320x240/112", thumbnail: "http://static.photos/event/640x360/212", videoUrl: "https://drive.google.com/file/d/1wkY97rYmAop3xQ0tDPUGzHPnjZ1M0PWA/view?usp=sharing", extraVideos: [
-                { title: "Diego no estúdio", duration: "5:20", thumbnail: "http://static.photos/studio/320x240/319", videoUrl: "https://drive.google.com/file/d/1wkY97rYmAop3xQ0tDPUGzHPnjZ1M0PWA/view?usp=sharing" },
-                { title: "Set exclusivo pro StoryVid", duration: "30:00", thumbnail: "http://static.photos/event/320x240/320", videoUrl: "https://drive.google.com/file/d/1wkY97rYmAop3xQ0tDPUGzHPnjZ1M0PWA/view?usp=sharing" }
-            ] }
+        // ==================== DADOS DOS VÍDEOS ====================
+        const videoUrls = [
+            "https://files.catbox.moe/b18cxd.mp4",
+            "https://files.catbox.moe/b7s0jt.mp4",
+            "https://files.catbox.moe/9ash7q.mp4",
+            "https://files.catbox.moe/85xvgf.mp4",
+            "https://files.catbox.moe/3q2rjn.mp4",
+            "https://files.catbox.moe/b0o4pg.mp4",
+            "https://files.catbox.moe/gnj5cf.mp4",
+            "https://files.catbox.moe/b4zisk.mp4",
+            "https://files.catbox.moe/20u08o.mp4",
+            "https://files.catbox.moe/io6dpz.mp4",
+            "https://files.catbox.moe/85xvgf.mp4"
         ];
 
+        const videosData = [
+            { title: "Momentos Incríveis", category: "exclusivo", views: "12.3K", date: "há 2 dias", description: "Uma coleção dos melhores momentos captados em exclusivo para a plataforma vazamets." },
+            { title: "Bastidores Exclusivos", category: "exclusivo", views: "8.7K", date: "há 3 dias", description: "O que acontece por trás das câmaras. Conteúdo que só encontra aqui." },
+            { title: "Destaque da Semana", category: "destaque", views: "25.1K", date: "há 1 dia", description: "O vídeo mais visto da semana. Não perca esta seleção especial." },
+            { title: "Em Alta Agora", category: "destaque", views: "19.4K", date: "há 12 horas", description: "Este vídeo está a incendiar as redes. Veja porquê." },
+            { title: "Acabou de Chegar", category: "novos", views: "3.2K", date: "há 1 hora", description: "Acabado de sair do forno. Seja dos primeiros a assistir." },
+            { title: "Novo Talentos", category: "novos", views: "5.6K", date: "há 5 horas", description: "Descubra novos criadores que estão a dar que falar." },
+            { title: "Sessão Exclusiva", category: "exclusivo", views: "14.9K", date: "há 4 dias", description: "Uma sessão completa que só os membros vazamets podem ver." },
+            { title: "Escolha do Editor", category: "destaque", views: "31.2K", date: "há 2 dias", description: "A nossa equipa escolheu este vídeo como imperdível." },
+            { title: "Recém-Adicionado", category: "novos", views: "2.1K", date: "há 30 minutos", description: "O mais fresco do catálogo. Actualização constante." },
+            { title: "Lançamento Exclusivo", category: "exclusivo", views: "22.0K", date: "há 1 semana", description: "Um lançamento que só podia estar no vazamets." },
+            { title: "Top da Semana", category: "destaque", views: "45.3K", date: "há 3 dias", description: "O vídeo que dominou as visualizações esta semana." }
+        ];
+
+        // ==================== ESTADO GLOBAL ====================
         let currentFilter = 'all';
         let currentSearch = '';
         let currentView = 'grid';
+        let currentVideo = null;
+        let videos = [];
 
-        function renderGrid() {
+        let fullVideos = videosData.map((v, idx) => ({
+            id: idx + 1,
+            title: v.title,
+            category: v.category,
+            videoUrl: videoUrls[idx],
+            thumbnail: null,
+            duration: null,
+            views: v.views,
+            date: v.date,
+            description: v.description
+        }));
+
+        // ==================== EXTRAÇÃO DE METADADOS ====================
+        function extractMetadata(videoUrl) {
+            return new Promise((resolve) => {
+                const video = document.createElement('video');
+                video.crossOrigin = "Anonymous";
+                video.muted = true;
+                video.preload = "metadata";
+                video.currentTime = 0.1;
+
+                const cleanup = () => {
+                    video.removeEventListener('loadeddata', onLoad);
+                    video.removeEventListener('error', onError);
+                    video.src = '';
+                    video.load();
+                };
+
+                function onLoad() {
+                    setTimeout(() => {
+                        try {
+                            const canvas = document.createElement('canvas');
+                            canvas.width = video.videoWidth;
+                            canvas.height = video.videoHeight;
+                            const ctx = canvas.getContext('2d');
+                            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                            canvas.toBlob(blob => {
+                                const thumb = URL.createObjectURL(blob);
+                                const duration = video.duration ? formatDuration(video.duration) : '--:--';
+                                resolve({ thumbnail: thumb, duration });
+                                cleanup();
+                            }, 'image/jpeg', 0.8);
+                        } catch (e) {
+                            resolve({ thumbnail: null, duration: '--:--' });
+                            cleanup();
+                        }
+                    }, 100);
+                }
+
+                function onError() {
+                    resolve({ thumbnail: null, duration: '--:--' });
+                    cleanup();
+                }
+
+                video.addEventListener('loadeddata', onLoad);
+                video.addEventListener('error', onError);
+                video.src = videoUrl;
+                video.load();
+            });
+        }
+
+        function formatDuration(seconds) {
+            const m = Math.floor(seconds / 60);
+            const s = Math.floor(seconds % 60);
+            return `${m}:${s.toString().padStart(2, '0')}`;
+        }
+
+        async function generateAllThumbnails() {
+            const promises = fullVideos.map(video => extractMetadata(video.videoUrl));
+            const results = await Promise.all(promises);
+            videos = fullVideos.map((v, i) => ({
+                ...v,
+                thumbnail: results[i].thumbnail,
+                duration: results[i].duration
+            }));
+            renderGrid();
+        }
+
+        // ==================== RENDERIZAÇÃO ====================
+        function renderPlaceholderGrid() {
             const grid = document.getElementById('stories-grid');
             const noResults = document.getElementById('no-results');
             const titleEl = document.getElementById('section-title');
             const countEl = document.getElementById('results-count');
 
-            let filtered = stories;
-            if (currentFilter !== 'all') filtered = filtered.filter(s => s.category === currentFilter);
+            let filtered = fullVideos;
+            if (currentFilter !== 'all') filtered = filtered.filter(v => v.category === currentFilter);
             if (currentSearch.trim()) {
                 const q = currentSearch.toLowerCase().trim();
-                filtered = filtered.filter(s => s.name.toLowerCase().includes(q) || s.title.toLowerCase().includes(q));
+                filtered = filtered.filter(v => v.title.toLowerCase().includes(q));
             }
 
-            const categoryNames = { 'all': 'Todas as Histórias', 'inspiração': 'Histórias de Inspiração', 'superação': 'Histórias de Superação', 'arte': 'Histórias de Arte', 'tecnologia': 'Histórias de Tecnologia', 'aventura': 'Histórias de Aventura', 'música': 'Histórias de Música' };
-            titleEl.textContent = currentSearch.trim() ? `Resultados para "${currentSearch}"` : categoryNames[currentFilter] || 'Todas as Histórias';
-            countEl.textContent = `${filtered.length} história${filtered.length !== 1 ? 's' : ''}`;
+            const categoryNames = {
+                'all': 'Todos os Vídeos',
+                'exclusivo': 'Conteúdo Exclusivo',
+                'destaque': 'Vídeos em Destaque',
+                'novos': 'Novos Vídeos'
+            };
+            titleEl.textContent = currentSearch.trim()
+                ? `Resultados para "${currentSearch}"`
+                : categoryNames[currentFilter] || 'Vídeos';
+            countEl.textContent = `${filtered.length} vídeo${filtered.length !== 1 ? 's' : ''}`;
 
             if (filtered.length === 0) {
                 grid.innerHTML = '';
@@ -365,121 +564,277 @@
             }
             noResults.classList.add('hidden');
 
-            grid.innerHTML = filtered.map((story, index) => `
-                <article class="story-card animated-border rounded-2xl bg-white/5 border border-white/10 overflow-hidden reveal" style="animation-delay: ${index * 0.08}s" onclick="openDetail(${story.id})" role="button" tabindex="0" aria-label="Ver história de ${story.name}">
-                    <div class="card-thumbnail relative aspect-video">
-                        <img src="${story.thumbnail}" alt="${story.title}" class="w-full h-full object-cover" loading="lazy">
-                        <div class="card-overlay"></div>
-                        <div class="card-play"><i data-lucide="play" class="w-5 h-5 text-black fill-black ml-0.5"></i></div>
-                        <div class="card-glow"></div>
-                        <div class="absolute bottom-3 right-3 z-10"><span class="duration-badge px-2 py-0.5 rounded-md text-xs font-medium text-white">${story.duration}</span></div>
-                        <div class="absolute top-3 left-3 z-10"><span class="px-2 py-0.5 rounded-md text-[10px] font-semibold uppercase tracking-wider bg-white/20 text-white">${story.category}</span></div>
+            grid.innerHTML = filtered.map((video, index) => `
+                <div class="story-card reveal" style="animation-delay: ${index * 0.05}s" onclick="openVideo(${video.id})">
+                    <div class="loading-thumb w-full" style="aspect-ratio:16/9; display:flex; align-items:center; justify-content:center; background:#1a1a1a;">
+                        <i data-lucide="loader-circle" class="w-8 h-8 text-gray-500 animate-spin"></i>
                     </div>
-                    <div class="p-4">
-                        <div class="flex items-start gap-3">
-                            <img src="${story.photo}" alt="${story.name}" class="w-9 h-9 rounded-full object-cover flex-shrink-0 ring-2 ring-white/10">
-                            <div class="flex-1 min-w-0">
-                                <h3 class="font-display font-semibold text-sm sm:text-base leading-snug mb-1 line-clamp-2 text-white/90">${story.title}</h3>
-                                <p class="text-xs sm:text-sm text-gray-400 mb-2">${story.name}</p>
-                                <div class="flex items-center gap-2 text-[11px] text-gray-500"><span class="flex items-center gap-1"><i data-lucide="eye" class="w-3 h-3"></i>${story.views}</span><span>•</span><span>${story.date}</span></div>
-                            </div>
-                        </div>
+                    <div class="play-overlay"><i data-lucide="play" class="w-5 h-5 text-black fill-black ml-0.5"></i></div>
+                    <div class="card-gradient"></div>
+                    <div class="card-info">
+                        <span class="px-2 py-0.5 rounded-md text-[10px] font-semibold uppercase tracking-wider bg-white/20 text-white">${video.category}</span>
                     </div>
-                </article>
+                </div>
             `).join('');
             lucide.createIcons();
-            requestAnimationFrame(() => document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible')));
         }
 
-        function resolveVideoSource(url) {
-            if (!url) return url;
-            const match = url.match(/\/d\/([^\/]+)(?:\/|$)/);
-            if (match) return `https://drive.google.com/uc?export=download&id=${match[1]}`;
-            if (/^[A-Za-z0-9_-]+$/.test(url)) return `https://drive.google.com/uc?export=download&id=${url}`;
-            return url;
+        function renderGrid() {
+            if (!videos.length) {
+                renderPlaceholderGrid();
+                return;
+            }
+
+            const grid = document.getElementById('stories-grid');
+            const noResults = document.getElementById('no-results');
+            const titleEl = document.getElementById('section-title');
+            const countEl = document.getElementById('results-count');
+
+            let filtered = videos;
+            if (currentFilter !== 'all') filtered = filtered.filter(v => v.category === currentFilter);
+            if (currentSearch.trim()) {
+                const q = currentSearch.toLowerCase().trim();
+                filtered = filtered.filter(v => v.title.toLowerCase().includes(q));
+            }
+
+            const categoryNames = {
+                'all': 'Todos os Vídeos',
+                'exclusivo': 'Conteúdo Exclusivo',
+                'destaque': 'Vídeos em Destaque',
+                'novos': 'Novos Vídeos'
+            };
+            titleEl.textContent = currentSearch.trim()
+                ? `Resultados para "${currentSearch}"`
+                : categoryNames[currentFilter] || 'Vídeos';
+            countEl.textContent = `${filtered.length} vídeo${filtered.length !== 1 ? 's' : ''}`;
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                noResults.classList.remove('hidden');
+                return;
+            }
+            noResults.classList.add('hidden');
+
+            grid.innerHTML = filtered.map((video, index) => `
+                <div class="story-card animated-border reveal" style="animation-delay: ${index * 0.05}s" onclick="openVideo(${video.id})">
+                    <img src="${video.thumbnail || ''}" alt="${video.title}" class="card-img" loading="lazy">
+                    <div class="play-overlay"><i data-lucide="play" class="w-5 h-5 text-black fill-black ml-0.5"></i></div>
+                    <div class="card-gradient"></div>
+                    <div class="absolute top-3 left-3 z-10">
+                        <span class="px-2 py-0.5 rounded-md text-[10px] font-semibold uppercase tracking-wider bg-white/20 text-white">${video.category}</span>
+                    </div>
+                    <div class="absolute top-3 right-3 z-10">
+                        <span class="px-2 py-0.5 rounded-md text-xs font-medium bg-black/70 border border-white/15 text-white">${video.duration || '...'}</span>
+                    </div>
+                    <div class="card-info">
+                        <div class="flex items-center gap-2 mb-1">
+                            <div class="w-5 h-5 rounded-full bg-white/20 flex-shrink-0"></div>
+                            <h3 class="font-display font-semibold text-xs leading-snug line-clamp-1 text-white/90">${video.title}</h3>
+                        </div>
+                        <p class="text-[10px] text-gray-400">${video.views} visualizações • ${video.date}</p>
+                    </div>
+                </div>
+            `).join('');
+
+            lucide.createIcons();
+            requestAnimationFrame(() => {
+                document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+            });
         }
 
-        function openDetail(storyId) {
-            const story = stories.find(s => s.id === storyId);
-            if (!story) return;
+        // ==================== NAVEGAÇÃO ====================
+        function openVideo(videoId) {
+            const video = videos.find(v => v.id === videoId);
+            if (!video) return;
+
             currentView = 'detail';
             window.scrollTo({ top: 0, behavior: 'instant' });
+
             document.getElementById('grid-view').classList.add('hidden');
             document.getElementById('detail-view').classList.remove('hidden');
             document.getElementById('main-footer').classList.add('hidden');
+
             const detailView = document.getElementById('detail-view');
             detailView.innerHTML = `
-                <div class="detail-page px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto py-6">
-                    <button onclick="goHome()" class="back-btn inline-flex items-center gap-2 text-sm text-gray-400 hover:text-white mb-6 px-3 py-2 rounded-xl"><i data-lucide="arrow-left" class="w-4 h-4"></i>Voltar às histórias</button>
-                    <div class="video-container mb-8"><video id="main-player" controls poster="${story.thumbnail}" class="w-full h-full" preload="metadata"><source src="${resolveVideoSource(story.videoUrl)}" type="video/mp4">Seu navegador não suporta vídeo.</video></div>
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                        <div class="lg:col-span-2">
-                            <div class="flex flex-wrap items-center gap-3 mb-3"><span class="px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider bg-white/10 text-gray-300 border border-white/10">${story.category}</span><span class="text-xs text-gray-500 flex items-center gap-1"><i data-lucide="eye" class="w-3.5 h-3.5"></i>${story.views} visualizações</span><span class="text-xs text-gray-500">•</span><span class="text-xs text-gray-500">${story.date}</span></div>
-                            <h1 class="font-display text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight mb-6">${story.title}</h1>
-                            <div class="flex items-center gap-4 mb-8 p-4 rounded-2xl bg-white/5 border border-white/10"><div class="profile-ring flex-shrink-0"><img src="${story.photo}" alt="${story.name}" class="w-14 h-14 rounded-full object-cover"></div><div class="flex-1 min-w-0"><h3 class="font-display font-semibold text-lg">${story.name}</h3><p class="text-sm text-gray-500">Protagonista desta história</p></div><button onclick="showToast('Agora você segue ${story.name}! ✨')" class="px-4 py-2 rounded-xl bg-white text-black text-sm font-medium transition-colors flex-shrink-0">Seguir</button></div>
-                            <div class="mb-8"><p class="text-gray-300 text-sm sm:text-base leading-relaxed">${story.description}</p></div>
-                            <div class="flex flex-wrap gap-3 mb-8"><button onclick="handleLike(this)" class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all text-sm"><i data-lucide="heart" class="w-4 h-4"></i><span>Gostar</span><span class="text-gray-500 count">0</span></button><button onclick="showToast('História partilhada! 🔗')" class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all text-sm"><i data-lucide="share-2" class="w-4 h-4"></i><span>Partilhar</span></button><button onclick="showToast('Adicionado aos favoritos! ⭐')" class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all text-sm"><i data-lucide="bookmark" class="w-4 h-4"></i><span>Guardar</span></button></div>
-                        </div>
-                        <div class="lg:col-span-1">
-                            ${story.extraVideos.length > 0 ? `<h3 class="font-display font-semibold text-base mb-4 flex items-center gap-2"><i data-lucide="list-video" class="w-4 h-4 text-gray-400"></i>Mais vídeos desta história</h3><div class="flex flex-col gap-3">${story.extraVideos.map(ev => `<div class="extra-video-card flex gap-3 p-3 rounded-xl bg-white/5 border border-white/10 overflow-hidden" onclick="playExtraVideo('${ev.videoUrl}', '${ev.thumbnail}')"><div class="relative w-28 h-16 flex-shrink-0 rounded-lg overflow-hidden"><img src="${ev.thumbnail}" alt="${ev.title}" class="w-full h-full object-cover"><div class="absolute inset-0 bg-black/30 flex items-center justify-center"><div class="w-7 h-7 rounded-full bg-white/80 flex items-center justify-center"><i data-lucide="play" class="w-3 h-3 text-black fill-black ml-0.5"></i></div></div></div><div class="flex-1 min-w-0 flex flex-col justify-center"><h4 class="text-xs sm:text-sm font-medium leading-snug line-clamp-2 mb-1">${ev.title}</h4><span class="text-[11px] text-gray-500 flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i>${ev.duration}</span></div></div>`).join('')}</div>` : `<div class="p-6 rounded-2xl bg-white/5 border border-white/10 text-center"><i data-lucide="film" class="w-8 h-8 mx-auto mb-3 text-gray-600"></i><p class="text-sm text-gray-500">Mais vídeos em breve</p></div>`}
-                            <div class="mt-6 p-5 rounded-2xl bg-white/5 border border-white/10"><h4 class="font-display font-semibold text-sm mb-4 flex items-center gap-2"><i data-lucide="bar-chart-3" class="w-4 h-4 text-gray-400"></i>Sobre esta história</h4><div class="space-y-3"><div class="flex items-center justify-between text-sm"><span class="text-gray-500">Duração</span><span class="text-white font-medium">${story.duration}</span></div><div class="flex items-center justify-between text-sm"><span class="text-gray-500">Visualizações</span><span class="text-white font-medium">${story.views}</span></div><div class="flex items-center justify-between text-sm"><span class="text-gray-500">Categoria</span><span class="px-2 py-0.5 rounded-md bg-white/10 text-gray-300 text-xs font-medium capitalize">${story.category}</span></div><div class="flex items-center justify-between text-sm"><span class="text-gray-500">Vídeos extras</span><span class="text-white font-medium">${story.extraVideos.length}</span></div></div></div>
+                <div class="detail-page px-4 sm:px-6 lg:px-8 py-6 max-w-6xl mx-auto">
+                    <div class="flex items-center justify-between mb-6 flex-wrap gap-3">
+                        <button onclick="goHome()" class="back-btn px-3 py-2 rounded-xl text-sm">
+                            <i data-lucide="arrow-left" class="w-4 h-4"></i>Voltar aos vídeos
+                        </button>
+                        <div class="flex gap-2">
+                            <button onclick="handleLike(this)" class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all text-sm" data-liked="false">
+                                <i data-lucide="heart" class="w-4 h-4"></i>
+                                <span>Gostar</span>
+                                <span class="text-gray-500 count">0</span>
+                            </button>
+                            <button onclick="shareVideo('${video.videoUrl}')" class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all text-sm">
+                                <i data-lucide="share-2" class="w-4 h-4"></i>Partilhar
+                            </button>
+                            <button onclick="showToast('Adicionado aos favoritos! ⭐')" class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all text-sm">
+                                <i data-lucide="bookmark" class="w-4 h-4"></i>Guardar
+                            </button>
                         </div>
                     </div>
-                    <div class="mt-12 pt-8 border-t border-white/10"><h3 class="font-display font-semibold text-lg mb-6 flex items-center gap-2"><i data-lucide="sparkles" class="w-5 h-5 text-gray-400"></i>Histórias relacionadas</h3><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">${getRelatedStories(story).map(s => `<div class="story-card rounded-xl bg-white/5 border border-white/10 overflow-hidden cursor-pointer" onclick="openDetail(${s.id})"><div class="card-thumbnail relative aspect-video"><img src="${s.thumbnail}" alt="${s.title}" class="w-full h-full object-cover" loading="lazy"><div class="card-overlay"></div><div class="card-play"><i data-lucide="play" class="w-4 h-4 text-black fill-black ml-0.5"></i></div><div class="card-glow"></div></div><div class="p-3"><h4 class="font-display font-medium text-sm line-clamp-2 mb-1">${s.title}</h4><p class="text-xs text-gray-500">${s.name}</p></div></div>`).join('')}</div></div>
+
+                    <div class="video-wrapper mb-6">
+                        <div class="video-container">
+                            <video id="mainVideo" controls controlsList="nodownload" oncontextmenu="return false;" autoplay poster="${video.thumbnail || ''}" preload="auto">
+                                <source src="${video.videoUrl}" type="video/mp4">
+                                Seu navegador não suporta vídeo.
+                            </video>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div class="lg:col-span-2">
+                            <div class="flex flex-wrap items-center gap-3 mb-3">
+                                <span class="px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider bg-white/10 border border-white/10 text-gray-300">${video.category}</span>
+                                <span class="text-xs text-gray-500 flex items-center gap-1"><i data-lucide="eye" class="w-3.5 h-3.5"></i>${video.views} visualizações</span>
+                                <span class="text-xs text-gray-500">•</span>
+                                <span class="text-xs text-gray-500">${video.date}</span>
+                            </div>
+
+                            <h1 class="font-display text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight mb-6">${video.title}</h1>
+
+                            <div class="flex items-center gap-4 mb-6 p-4 rounded-2xl bg-white/5 border border-white/10">
+                                <div class="profile-ring flex-shrink-0">
+                                    <div class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center text-lg font-bold">V</div>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <h3 class="font-display font-semibold text-base">vazamets Oficial</h3>
+                                    <p class="text-sm text-gray-500">Canal oficial • ${video.views} visualizações</p>
+                                </div>
+                                <button onclick="showToast('Agora segues o canal! ✨')" class="px-5 py-2 rounded-xl bg-white text-black text-sm font-medium hover:bg-gray-200 transition-colors flex-shrink-0">
+                                    Seguir
+                                </button>
+                            </div>
+
+                            <div class="mb-8">
+                                <p class="text-gray-300 text-sm sm:text-base leading-relaxed">${video.description || 'Vídeo exclusivo da plataforma vazamets. Desfrute em HD com controlo total.'}</p>
+                            </div>
+                        </div>
+
+                        <div class="lg:col-span-1">
+                            <div class="p-5 rounded-2xl bg-white/5 border border-white/10 sticky top-24">
+                                <h4 class="font-display font-semibold text-sm mb-4 flex items-center gap-2">
+                                    <i data-lucide="info" class="w-4 h-4 text-gray-400"></i>
+                                    Informações
+                                </h4>
+                                <div class="space-y-3">
+                                    <div class="flex items-center justify-between text-sm">
+                                        <span class="text-gray-500">Duração</span>
+                                        <span class="text-white font-medium">${video.duration || '--:--'}</span>
+                                    </div>
+                                    <div class="flex items-center justify-between text-sm">
+                                        <span class="text-gray-500">Visualizações</span>
+                                        <span class="text-white font-medium">${video.views}</span>
+                                    </div>
+                                    <div class="flex items-center justify-between text-sm">
+                                        <span class="text-gray-500">Categoria</span>
+                                        <span class="px-2 py-0.5 rounded-md bg-white/10 text-gray-300 text-xs font-medium capitalize">${video.category}</span>
+                                    </div>
+                                    <div class="flex items-center justify-between text-sm">
+                                        <span class="text-gray-500">Publicado</span>
+                                        <span class="text-white font-medium">${video.date}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 pt-8 border-t border-white/10">
+                        <h3 class="font-display font-semibold text-lg mb-6 flex items-center gap-2">
+                            <i data-lucide="sparkles" class="w-5 h-5 text-gray-400"></i>
+                            Vídeos Relacionados
+                        </h3>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+                            ${getRelatedVideos(video).map(v => `
+                                <div class="story-card rounded-xl cursor-pointer" onclick="openVideo(${v.id})">
+                                    <img src="${v.thumbnail || ''}" alt="${v.title}" class="card-img">
+                                    <div class="play-overlay" style="width:36px;height:36px;"><i data-lucide="play" class="w-4 h-4 text-black fill-black ml-0.5"></i></div>
+                                    <div class="card-gradient"></div>
+                                    <div class="absolute top-2 left-2 z-10">
+                                        <span class="px-1.5 py-0.5 rounded text-[9px] font-semibold uppercase bg-white/20 text-white">${v.category}</span>
+                                    </div>
+                                    <div class="absolute top-2 right-2 z-10">
+                                        <span class="px-1.5 py-0.5 rounded text-[10px] font-medium bg-black/70 border border-white/15 text-white">${v.duration || '...'}</span>
+                                    </div>
+                                    <div class="card-info">
+                                        <h4 class="text-xs font-medium line-clamp-2">${v.title}</h4>
+                                        <p class="text-[10px] text-gray-400 mt-0.5">${v.views} visualizações</p>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
                 </div>
             `;
-            lucide.createIcons();
-        }
 
-        function playExtraVideo(url, poster) {
-            const player = document.getElementById('main-player');
-            if (player) {
-                player.src = resolveVideoSource(url);
-                player.poster = poster || '';
-                player.load();
-                player.play().catch(() => {});
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                showToast('A reproduzir vídeo extra... ▶️');
+            lucide.createIcons();
+
+            const videoElem = document.getElementById('mainVideo');
+            if (videoElem) {
+                currentVideo = videoElem;
+                videoElem.load();
             }
         }
 
-        function getRelatedStories(currentStory) {
-            return stories.filter(s => s.id !== currentStory.id && s.category === currentStory.category).slice(0, 3).concat(stories.filter(s => s.id !== currentStory.id && s.category !== currentStory.category)).slice(0, 3);
+        function getRelatedVideos(currentVideo) {
+            return videos
+                .filter(v => v.id !== currentVideo.id)
+                .sort(() => 0.5 - Math.random())
+                .slice(0, 8);
         }
 
         function goHome() {
-            const player = document.getElementById('main-player');
-            if (player) player.pause();
+            if (currentVideo) currentVideo.pause();
             currentView = 'grid';
-            currentFilter = 'all';
-            currentSearch = '';
             document.getElementById('grid-view').classList.remove('hidden');
             document.getElementById('detail-view').classList.add('hidden');
             document.getElementById('main-footer').classList.remove('hidden');
-            document.getElementById('search-input').value = '';
-            document.getElementById('mobile-search-input').value = '';
-            document.getElementById('search-clear').classList.add('hidden');
-            document.querySelectorAll('#category-filters .tag-pill').forEach(btn => { btn.classList.remove('active', 'text-white'); btn.classList.add('text-gray-400'); });
-            document.querySelector('#category-filters .tag-pill').classList.add('active', 'text-white');
-            document.querySelector('#category-filters .tag-pill').classList.remove('text-gray-400');
-            history.pushState(null, '', '/');
-            renderGrid();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        let searchTimeout = null;
+        // ==================== INTERAÇÕES ====================
+        function handleLike(btn) {
+            const countEl = btn.querySelector('.count');
+            let count = parseInt(countEl.textContent);
+            const isLiked = btn.dataset.liked === 'true';
+
+            if (isLiked) {
+                count--;
+                btn.dataset.liked = 'false';
+                btn.classList.remove('bg-white/15', 'border-white/20');
+                btn.classList.add('bg-white/5');
+                showToast('Removeste o teu like');
+            } else {
+                count++;
+                btn.dataset.liked = 'true';
+                btn.classList.add('bg-white/15', 'border-white/20');
+                btn.classList.remove('bg-white/5');
+                showToast('Gostaste deste vídeo! ❤️');
+            }
+            countEl.textContent = count;
+        }
+
+        function shareVideo(url) {
+            if (navigator.share) {
+                navigator.share({ title: 'vazamets', url: url });
+            } else {
+                navigator.clipboard.writeText(url);
+                showToast('Link copiado! 🔗');
+            }
+        }
+
         function handleSearch(query) {
-            clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(() => {
-                currentSearch = query;
-                const desktopInput = document.getElementById('search-input');
-                const mobileInput = document.getElementById('mobile-search-input');
-                if (desktopInput && document.activeElement !== desktopInput) desktopInput.value = query;
-                if (mobileInput && document.activeElement !== mobileInput) mobileInput.value = query;
-                document.getElementById('search-clear').classList.toggle('hidden', !query.trim());
-                if (currentView === 'detail') goHome();
-                renderGrid();
-            }, 200);
+            currentSearch = query;
+            const di = document.getElementById('search-input');
+            const mi = document.getElementById('mobile-search-input');
+            if (di && document.activeElement !== di) di.value = query;
+            if (mi && document.activeElement !== mi) mi.value = query;
+            document.getElementById('search-clear').classList.toggle('hidden', !query.trim());
+            if (currentView === 'detail') goHome();
+            renderGrid();
         }
 
         function clearSearch() {
@@ -487,54 +842,42 @@
             document.getElementById('search-input').value = '';
             document.getElementById('mobile-search-input').value = '';
             document.getElementById('search-clear').classList.add('hidden');
+            if (currentView === 'detail') goHome();
             renderGrid();
         }
 
         function filterCategory(category, btn) {
             currentFilter = category;
-            document.querySelectorAll('#category-filters .tag-pill').forEach(b => { b.classList.remove('active', 'text-white'); b.classList.add('text-gray-400'); });
+            document.querySelectorAll('#category-filters .tag-pill').forEach(b => {
+                b.classList.remove('active', 'text-white');
+                b.classList.add('text-gray-400');
+            });
             btn.classList.add('active', 'text-white');
             btn.classList.remove('text-gray-400');
             if (currentView === 'detail') goHome();
             renderGrid();
         }
 
-        function handleLike(btn) {
-            const countEl = btn.querySelector('.count');
-            const icon = btn.querySelector('[data-lucide]');
-            let count = parseInt(countEl.textContent);
-            const isLiked = btn.dataset.liked === 'true';
-            if (isLiked) {
-                count--;
-                btn.dataset.liked = 'false';
-                btn.classList.remove('bg-white/10', 'border-white/20');
-                btn.classList.add('bg-white/5', 'border-white/10');
-                icon.style.fill = 'none';
-                icon.style.color = '';
-            } else {
-                count++;
-                btn.dataset.liked = 'true';
-                btn.classList.add('bg-white/10', 'border-white/20');
-                btn.classList.remove('bg-white/5', 'border-white/10');
-                icon.style.fill = '#fff';
-                icon.style.color = '#fff';
-            }
-            countEl.textContent = count;
-        }
-
         function toggleMobileSearch() {
             const el = document.getElementById('mobile-search');
-            if (el.style.maxHeight && el.style.maxHeight !== '0px') el.style.maxHeight = '0px';
-            else { el.style.maxHeight = '80px'; el.querySelector('input').focus(); }
+            if (el.style.maxHeight && el.style.maxHeight !== '0px') {
+                el.style.maxHeight = '0px';
+            } else {
+                el.style.maxHeight = '80px';
+                el.querySelector('input').focus();
+            }
         }
 
         function showToast(message) {
-            const container = document.getElementById('toast-container');
-            const toast = document.createElement('div');
-            toast.className = 'toast px-4 py-3 rounded-xl bg-white/10 backdrop-blur-xl border border-white/10 text-sm font-medium text-white shadow-2xl max-w-xs';
-            toast.textContent = message;
-            container.appendChild(toast);
-            setTimeout(() => { toast.classList.add('toast-out'); setTimeout(() => toast.remove(), 300); }, 2500);
+            const c = document.getElementById('toast-container');
+            const t = document.createElement('div');
+            t.className = 'toast px-4 py-3 rounded-xl bg-white/10 backdrop-blur-xl border border-white/10 text-sm font-medium text-white shadow-2xl max-w-xs';
+            t.textContent = message;
+            c.appendChild(t);
+            setTimeout(() => {
+                t.classList.add('toast-out');
+                setTimeout(() => t.remove(), 300);
+            }, 2500);
         }
 
         function initParticles() {
@@ -568,18 +911,18 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            renderGrid();
+            renderPlaceholderGrid();
             lucide.createIcons();
             initParticles();
             initHeaderScroll();
+            generateAllThumbnails();
         });
 
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' && document.activeElement.classList.contains('story-card')) document.activeElement.click();
-            if (e.key === 'Escape' && currentView === 'detail') goHome();
+            if (e.key === 'Escape' && currentView === 'detail') {
+                goHome();
+            }
         });
-
-        window.addEventListener('popstate', () => { if (currentView === 'detail') goHome(); });
     </script>
 </body>
 </html>
