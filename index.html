@@ -446,17 +446,17 @@
         ];
 
         const videosData = [
-            { title: "Momentos Incríveis", category: "exclusivo", views: "12.3K", date: "há 2 dias", description: "Uma coleção dos melhores momentos captados em exclusivo para a plataforma vazamets." },
-            { title: "Bastidores Exclusivos", category: "exclusivo", views: "8.7K", date: "há 3 dias", description: "O que acontece por trás das câmaras. Conteúdo que só encontra aqui." },
-            { title: "Destaque da Semana", category: "destaque", views: "25.1K", date: "há 1 dia", description: "O vídeo mais visto da semana. Não perca esta seleção especial." },
-            { title: "Em Alta Agora", category: "destaque", views: "19.4K", date: "há 12 horas", description: "Este vídeo está a incendiar as redes. Veja porquê." },
-            { title: "Acabou de Chegar", category: "novos", views: "3.2K", date: "há 1 hora", description: "Acabado de sair do forno. Seja dos primeiros a assistir." },
-            { title: "Novo Talentos", category: "novos", views: "5.6K", date: "há 5 horas", description: "Descubra novos criadores que estão a dar que falar." },
-            { title: "Sessão Exclusiva", category: "exclusivo", views: "14.9K", date: "há 4 dias", description: "Uma sessão completa que só os membros vazamets podem ver." },
-            { title: "Escolha do Editor", category: "destaque", views: "31.2K", date: "há 2 dias", description: "A nossa equipa escolheu este vídeo como imperdível." },
-            { title: "Recém-Adicionado", category: "novos", views: "2.1K", date: "há 30 minutos", description: "O mais fresco do catálogo. Actualização constante." },
-            { title: "Lançamento Exclusivo", category: "exclusivo", views: "22.0K", date: "há 1 semana", description: "Um lançamento que só podia estar no vazamets." },
-            { title: "Top da Semana", category: "destaque", views: "45.3K", date: "há 3 dias", description: "O vídeo que dominou as visualizações esta semana." }
+            { title: "Momentos Incríveis", category: "exclusivo", views: "12.3K", date: "há 2 dias", description: "Uma coleção dos melhores momentos captados em exclusivo para a plataforma vazamets.", slug: "momentos-incriveis" },
+            { title: "Bastidores Exclusivos", category: "exclusivo", views: "8.7K", date: "há 3 dias", description: "O que acontece por trás das câmaras. Conteúdo que só encontra aqui.", slug: "bastidores-exclusivos" },
+            { title: "Destaque da Semana", category: "destaque", views: "25.1K", date: "há 1 dia", description: "O vídeo mais visto da semana. Não perca esta seleção especial.", slug: "destaque-da-semana" },
+            { title: "Em Alta Agora", category: "destaque", views: "19.4K", date: "há 12 horas", description: "Este vídeo está a incendiar as redes. Veja porquê.", slug: "em-alta-agora" },
+            { title: "Acabou de Chegar", category: "novos", views: "3.2K", date: "há 1 hora", description: "Acabado de sair do forno. Seja dos primeiros a assistir.", slug: "acabou-de-chegar" },
+            { title: "Novo Talentos", category: "novos", views: "5.6K", date: "há 5 horas", description: "Descubra novos criadores que estão a dar que falar.", slug: "novo-talentos" },
+            { title: "Sessão Exclusiva", category: "exclusivo", views: "14.9K", date: "há 4 dias", description: "Uma sessão completa que só os membros vazamets podem ver.", slug: "sessao-exclusiva" },
+            { title: "Escolha do Editor", category: "destaque", views: "31.2K", date: "há 2 dias", description: "A nossa equipa escolheu este vídeo como imperdível.", slug: "escolha-do-editor" },
+            { title: "Recém-Adicionado", category: "novos", views: "2.1K", date: "há 30 minutos", description: "O mais fresco do catálogo. Actualização constante.", slug: "recem-adicionado" },
+            { title: "Lançamento Exclusivo", category: "exclusivo", views: "22.0K", date: "há 1 semana", description: "Um lançamento que só podia estar no vazamets.", slug: "lancamento-exclusivo" },
+            { title: "Top da Semana", category: "destaque", views: "45.3K", date: "há 3 dias", description: "O vídeo que dominou as visualizações esta semana.", slug: "top-da-semana" }
         ];
 
         // ==================== ESTADO GLOBAL ====================
@@ -475,7 +475,8 @@
             duration: null,
             views: v.views,
             date: v.date,
-            description: v.description
+            description: v.description,
+            slug: v.slug
         }));
 
         // ==================== EXTRAÇÃO DE METADADOS (OTIMIZADA) ====================
@@ -658,6 +659,52 @@
             }
         }
 
+        // ==================== ROTEAMENTO ====================
+        function getVideoBySlug(slug) {
+            return fullVideos.find(v => v.slug === slug);
+        }
+
+        function getVideoById(id) {
+            return fullVideos.find(v => v.id === parseInt(id));
+        }
+
+        function updateURL(video) {
+            if (video && video.slug) {
+                window.location.hash = `#/video/${video.slug}`;
+            } else {
+                window.location.hash = '#/';
+            }
+        }
+
+        function handleRoute() {
+            const hash = window.location.hash || '#/';
+            
+            // Padrão: #/video/:slug
+            const videoMatch = hash.match(/^#\/video\/(.+)$/);
+            
+            if (videoMatch) {
+                const slug = videoMatch[1];
+                const video = getVideoBySlug(slug);
+                
+                if (video) {
+                    // Se ainda não tiver thumbnails carregados, abrir mesmo assim
+                    if (videos.length === 0) {
+                        // Vídeos ainda estão a carregar, mas podemos abrir na mesma
+                        openVideoById(video.id);
+                    } else {
+                        openVideoById(video.id);
+                    }
+                } else {
+                    // Slug não encontrado, redirecionar para home
+                    window.location.hash = '#/';
+                    goHome();
+                }
+            } else {
+                // Qualquer outra rota = home
+                goHome();
+            }
+        }
+
         // ==================== RENDERIZAÇÃO ====================
         function renderPlaceholderGrid() {
             const grid = document.getElementById('stories-grid');
@@ -691,7 +738,7 @@
             noResults.classList.add('hidden');
 
             grid.innerHTML = filtered.map((video, index) => `
-                <div class="story-card reveal" style="animation-delay: ${index * 0.03}s" onclick="openVideo(${video.id})">
+                <div class="story-card reveal" style="animation-delay: ${index * 0.03}s" onclick="navigateToVideo('${video.slug}')">
                     <div class="loading-thumb w-full" style="aspect-ratio:16/9; display:flex; align-items:center; justify-content:center; background:#1a1a1a;">
                         <i data-lucide="loader-circle" class="w-8 h-8 text-gray-500 animate-spin"></i>
                     </div>
@@ -756,7 +803,7 @@
             noResults.classList.add('hidden');
 
             grid.innerHTML = filtered.map((video, index) => `
-                <div class="story-card animated-border reveal" style="animation-delay: ${index * 0.03}s" onclick="openVideo(${video.id})">
+                <div class="story-card animated-border reveal" style="animation-delay: ${index * 0.03}s" onclick="navigateToVideo('${video.slug}')">
                     <img src="${video.thumbnail || ''}" alt="${video.title}" class="card-img" loading="lazy">
                     <div class="play-overlay"><i data-lucide="play" class="w-5 h-5 text-black fill-black ml-0.5"></i></div>
                     <div class="card-gradient"></div>
@@ -783,10 +830,29 @@
         }
 
         // ==================== NAVEGAÇÃO ====================
-        function openVideo(videoId) {
-            const video = videos.find(v => v.id === videoId);
-            if (!video) return;
+        function navigateToVideo(slug) {
+            window.location.hash = `#/video/${slug}`;
+        }
 
+        function openVideoById(videoId) {
+            const video = fullVideos.find(v => v.id === parseInt(videoId));
+            if (!video) return;
+            
+            // Atualiza os dados com thumbnails se já existirem
+            const enrichedVideo = videos.find(v => v.id === parseInt(videoId)) || video;
+            
+            openVideoDetail(enrichedVideo);
+        }
+
+        function openVideo(videoId) {
+            // Função legacy mantida para compatibilidade
+            const video = videos.find(v => v.id === videoId) || fullVideos.find(v => v.id === videoId);
+            if (!video) return;
+            
+            navigateToVideo(video.slug);
+        }
+
+        function openVideoDetail(video) {
             currentView = 'detail';
             window.scrollTo({ top: 0, behavior: 'instant' });
 
@@ -807,7 +873,7 @@
                                 <span>Gostar</span>
                                 <span class="text-gray-500 count">0</span>
                             </button>
-                            <button onclick="shareVideo('${video.videoUrl}')" class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all text-sm">
+                            <button onclick="shareCurrentVideo()" class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all text-sm">
                                 <i data-lucide="share-2" class="w-4 h-4"></i>Partilhar
                             </button>
                             <button onclick="showToast('Adicionado aos favoritos! ⭐')" class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all text-sm">
@@ -877,6 +943,10 @@
                                         <span class="text-gray-500">Publicado</span>
                                         <span class="text-white font-medium">${video.date}</span>
                                     </div>
+                                    <div class="flex items-center justify-between text-sm">
+                                        <span class="text-gray-500">Link</span>
+                                        <span class="text-white font-medium text-xs">/video/${video.slug}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -889,7 +959,7 @@
                         </h3>
                         <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
                             ${getRelatedVideos(video).map(v => `
-                                <div class="story-card rounded-xl cursor-pointer" onclick="openVideo(${v.id})">
+                                <div class="story-card rounded-xl cursor-pointer" onclick="navigateToVideo('${v.slug}')">
                                     <img src="${v.thumbnail || ''}" alt="${v.title}" class="card-img">
                                     <div class="play-overlay" style="width:36px;height:36px;"><i data-lucide="play" class="w-4 h-4 text-black fill-black ml-0.5"></i></div>
                                     <div class="card-gradient"></div>
@@ -920,7 +990,8 @@
         }
 
         function getRelatedVideos(currentVideo) {
-            return videos
+            const source = videos.length > 0 ? videos : fullVideos;
+            return source
                 .filter(v => v.id !== currentVideo.id)
                 .sort(() => 0.5 - Math.random())
                 .slice(0, 8);
@@ -929,6 +1000,7 @@
         function goHome() {
             if (currentVideo) currentVideo.pause();
             currentView = 'grid';
+            window.location.hash = '#/';
             document.getElementById('grid-view').classList.remove('hidden');
             document.getElementById('detail-view').classList.add('hidden');
             document.getElementById('main-footer').classList.remove('hidden');
@@ -957,13 +1029,19 @@
             countEl.textContent = count;
         }
 
-        function shareVideo(url) {
+        function shareCurrentVideo() {
+            const url = window.location.href;
             if (navigator.share) {
                 navigator.share({ title: 'vazamets', url: url });
             } else {
                 navigator.clipboard.writeText(url);
                 showToast('Link copiado! 🔗');
             }
+        }
+
+        function shareVideo(url) {
+            // Função legacy - agora partilha a URL atual
+            shareCurrentVideo();
         }
 
         function handleSearch(query) {
@@ -1056,7 +1134,13 @@
             initParticles();
             initHeaderScroll();
             generateAllThumbnails(); // extração sequencial com atualização progressiva
+            
+            // Verifica se há uma rota na URL ao carregar
+            handleRoute();
         });
+
+        // Escuta mudanças no hash da URL
+        window.addEventListener('hashchange', handleRoute);
 
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && currentView === 'detail') {
